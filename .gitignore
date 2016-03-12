@@ -31,3 +31,11 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+
+node_modules
+public/lib/bower_components
+public/lib/node_modules
+public/lib/.sass-cache
+
+
+
