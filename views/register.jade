@@ -1,0 +1,20 @@
+h1 Create a New Admin Account
+
+form(action='/register', method='POST')
+  .input-group
+    input(type='text', placeholder="first name" size="50", name='orgName', autofocus, required, value=orgName)
+  .input-group
+    input(type='text',placeholder="first name" size="50", name='firstName', autofocus, required, value=firstName)
+  .input-group
+    input(type='text', placeholder="first name" size="50",name='lastName', autofocus, required, value=lastName)
+  .input-group
+    label(for='email') Email
+    input(type='email', name='email' autofocus, required, value=email)
+  .input-group
+    label(for='pass') Password
+    input#pass(type='password', name='password')
+  .input-group
+    label(for='verify') Verify Password
+    input(type='password' name='verify', required)
+  .input-group
+    input(type='submit', value='register')

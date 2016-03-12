@@ -23,12 +23,15 @@ app.use(bodyParser.urlencoded({
 
 
 //create paths to public directory:
-app.use(express.static('public'));
+// app.use(express.static('public'));
+
+app.use(routes)
 
 //routes:
-app.get('/', (req, res) => {
-  res.sendfile('./public/')
-})
+// app.get('/', (req, res) => {
+//   res.send('home page')
+//   // res.sendfile('./public/')
+// })
 
 //connect to specified mongodb before starting server:
 mongoose.connect(`mongodb://localhost:${MONGODB_PORT}/${MONGODB_DB_NAME}`)
