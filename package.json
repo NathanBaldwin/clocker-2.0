@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "serve": "nodemon server.js",
-    "postinstall": "bower install"
+    "serve": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,8 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "bower": "^1.7.7",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "mongoose": "^4.4.7"
   },
   "devDependencies": {
     "bower": "^1.7.7",
