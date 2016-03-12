@@ -34,6 +34,7 @@ router.post('/register', (req, res) => {
     console.log("passwords DONT match");
     res.render('register', {
       //don't make them fill out their other info again!
+      //inject following variables to register form:
       orgName: req.body.orgName,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
