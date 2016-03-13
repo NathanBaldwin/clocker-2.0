@@ -33,8 +33,8 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
-//create paths to public directory:
-// app.use(express.static('public'));
+// create paths to public directory:
+app.use(express.static('public'));
 
 //ROUTES
 app.use(routes)
