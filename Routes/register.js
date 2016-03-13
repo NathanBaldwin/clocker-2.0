@@ -2,30 +2,31 @@
 
 const express = require('express')
 const router = express.Router()
-const User = require('../models/user.model')
+const Admin = require('../models/admin.model')
 
 //send rendered register jade template on get of /register route:
 router.get('/register', (req, res) => {
   res.render('register')
 })
 
-//when user submits register form, perform following logic:
+//when admin submits register form, perform following logic:
 router.post('/register', (req, res) => {
   //check to see if password already exists in db, so that we can
   //redirect to login page if they've already registered
   if (req.body.password === req.body.verify) {
-    User.findOne({email: req.body.email}, (err, user) => {
+    Admin.findOne({email: req.body.email}, (err, admin) => {
       if (err) throw err
-      //if user exists, redirect to login:
-      if (user) {
+      //if admin exists, redirect to login:
+      if (admin) {
         res.redirect('/login')
       } //if they don't already exist, and the passwords are verified
-        //create new user in db:
-        //password is hashed on the User Model pre('save') method
+        //create new admin in db:
+        //password is hashed on the admin Model pre('save') method
         else {
-          User.create(req.body, (err) => {
+          //if admin account doesn't already exist and passwords are verified
+          //##### CREATE NEW ADMIT ACCOUNT
+          Admin.create(req.body, (err) => {
             if (err) throw err
-
             res.redirect('/login')
           })
       }

@@ -5,7 +5,7 @@ const router = express.Router()
 
 //if there is a get request for an undefined route, redirect to login page:
 router.get('*', (req, res) => {
-  res.redirect('./login')
+  res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })
 
 module.exports = router

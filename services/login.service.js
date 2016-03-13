@@ -1,12 +1,12 @@
 'use strict'
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/user.model')
+const Admin = require('../models/admin.model')
 const authenticate = require('./authenticate.service')
 
 console.log("authentication service initialized")
 
-passport.serializeUser(function(user, done) {//parses user object that gets send with request
+passport.serializeUser(function(user, done) {//parses user object that gets sent with request
   done(null, user._id);//defines what info we want stored in session, retrievable via req.session.passport.user
   //we'll store this session data in redis
   //this session will have an id, which is stored in an encrypted cookie on the browser
@@ -14,7 +14,7 @@ passport.serializeUser(function(user, done) {//parses user object that gets send
 });
 
 passport.deserializeUser(function(id, done) {//first parameter is req.session.passport.user (which we spedified above to just be our userid)
-  User.findById(id, done);//specifies what we want req.user to be
+  Admin.findById(id, done);//specifies what we want req.user to be
 });
 
 passport.use(new LocalStrategy({
@@ -22,7 +22,7 @@ passport.use(new LocalStrategy({
   },
   (email, password, done ) => {
     console.log("before user.findOne");
-    User.findOne({email: email}, (err, user) => {
+    Admin.findOne({email: email}, (err, user) => {
       if(err) throw err
       if (user) {
         //use authenticate service to have bcrypt compare provided and stored passwords:
