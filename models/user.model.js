@@ -18,7 +18,6 @@ const UserSchema = mongoose.Schema({
 UserSchema.pre('save', function (next) { //can't use fat arrows because it will change 'this'
   bcrypt.hash(this.password, hashDifficulty, (err, hash) => {
     if (err) throw err
-
     this.password = hash //change value of password property to equal hashed password
     next()
   })

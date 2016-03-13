@@ -21,6 +21,7 @@ router.post('/register', (req, res) => {
         res.redirect('/login')
       } //if they don't already exist, and the passwords are verified
         //create new user in db:
+        //password is hashed on the User Model pre('save') method
         else {
           User.create(req.body, (err) => {
             if (err) throw err

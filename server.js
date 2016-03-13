@@ -1,8 +1,12 @@
 'use strict'
 
 const express = require('express')
+const flash = require('connect-flash')
 const app = express()
 const mongoose = require('mongoose')
+const passport = require('passport')
+const session = require('express-session')
+// const flash = require('connect-flash')
 
 const bodyParser = require('body-parser')
 const routes = require('./routes')
@@ -15,24 +19,27 @@ const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2'
 //use jade to render templates:
 app.set('view engine', 'jade');
 
-//middleware:
+//MIDDLEWARE:
 app.use(bodyParser.urlencoded({
   extended:false
 }))
 
-
+app.use(session({
+  secret: "secret key",
+  resave: true,
+  saveUninitialized: false
+}))
+app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
 //create paths to public directory:
 // app.use(express.static('public'));
 
+//ROUTES
 app.use(routes)
 
-//routes:
-// app.get('/', (req, res) => {
-//   res.send('home page')
-//   // res.sendfile('./public/')
-// })
-
+//DATABASE AND SERVER
 //connect to specified mongodb before starting server:
 mongoose.connect(`mongodb://localhost:${MONGODB_PORT}/${MONGODB_DB_NAME}`)
 

@@ -1,3 +1,4 @@
+  
 h1 Login Page
 
 form(action='/login', method='POST') 
@@ -7,3 +8,6 @@ form(action='/login', method='POST')
     input#pass(type='password', placeholder='Password', name='password')
   .input-group
     input(type='submit', value='login')
+
+if message
+  p= message
