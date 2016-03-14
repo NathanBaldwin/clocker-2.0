@@ -2,23 +2,14 @@
 
 const express = require('express')
 const router = express.Router()
-const Admin = require('../models/admin.model')
+const apiCtrl = require('../controllers/api.ctrl')
 
-router.get('/adminObj', (req, res) => {
-  console.log("requested data from API");
-  console.log("req.user", req.user);
-  // check to see if user is logged in/has active session:
-  //if not, redirect to login
-  if (!req.user) {
-    res.redirect('/login')
-  }
-
-  //find logged in user's admin object:
-  Admin.findById(req.user, (err, adminData) => {
-    if (err) throw err
-    console.log("adminData returned from db:", adminData);
-    res.send(adminData)
-  })
+router.get('/adminObj', apiCtrl.getAdminObj)
+router.post('/adminObj', (req, res) => {
+  console.log("POSTED TO ADMIN OBJ!");
+  console.log("req.body", req.body);
 })
+router.get('/adminObj/visitors', apiCtrl.getVisitors)
+router.post('/adminObj/visitors', apiCtrl.addVisitor)
 
 module.exports = router
