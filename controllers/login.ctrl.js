@@ -8,9 +8,9 @@ loginService //initializing login service. This is where we configure for passpo
 
 module.exports = {
   //GET /login:
-  index: (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'))
-  },
+  // index: (req, res) => {
+  //   res.sendFile(path.join(__dirname, '../public', 'index.html'))
+  // },
   //POST /login:
   //passport.authenticate method looks at our local strategy. Depending on result of done() in our local strategy
   //'user' argument is either true or false
@@ -33,9 +33,10 @@ module.exports = {
         }
         console.log("req.user", req.user);
         console.log("req.session.passport.user", req.session.passport.user);
+        let uid = req.session.passport.user
         //### SERVE ANGULAR APP ######
         //create an absolute path to serve angular app
-        return res.sendFile(path.join(__dirname, '../public', 'index.html'))
+        return res.send(uid)
         // res.redirect('/users/' + user.username);
       })
     })(req, res, next)

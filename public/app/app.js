@@ -1,34 +1,35 @@
 var app = angular.module("app", ['ngRoute', 'firebase', 'ngResource', 'angular.filter', 'floatThead']);
 
 app
-  .config(['$routeProvider',
-    function($routeProvider) {
+  .config(['$routeProvider', '$httpProvider',
+    function($routeProvider, $httpProvider) {
+      $httpProvider.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
     	$routeProvider
-  		.when('/clocker/login', {
+  		.when('/login', {
         templateUrl: 'Partials/login.html',
         controller: 'login'
       })
-      .when('/clocker/adminsignup', {
+      .when('/register', {
       	templateUrl: 'Partials/adminSignUp.html',
       	controller: 'adminSignUp'
       })
-      .when('/clocker/visitorsignin', {
+      .when('/visitorsignin', {
       	templateUrl: 'Partials/visitorSignIn.html',
       	controller: 'visitorSignIn'
       })
-      .when('/clocker/backend/activity', {
+      .when('/backend/activity', {
         templateUrl: 'Partials/backend-activity.html',
         controller: 'backend-activity'
       })
-      .when('/clocker/backend/people', {
+      .when('/backend/people', {
         templateUrl: 'Partials/backend-people.html',
         controller: 'backend-people'
       })
-      .otherwise('/clocker/login');
+      .otherwise('/login');
     }])
   .run(['$rootScope', '$resource',
     function($rootScope, $resource) {
-      $rootScope.adminObj = $resource('/adminObj').get()
-      $rootScope.pastVisitors = $resource('/adminObj/visitors/:id').query()//query assumes 'isArray=true'
+      // $rootScope.adminObj = $resource('/adminObj').get()
+      // $rootScope.pastVisitors = $resource('/adminObj/visitors/:id').query()//query assumes 'isArray=true'
 
     }])

@@ -10,7 +10,7 @@ const loginCtrl = require('../controllers/login.ctrl')
 
 
 
-router.get('/', loginCtrl.index)
+// router.get('/', loginCtrl.index)
 
 router.post('/login', loginCtrl.login)
 

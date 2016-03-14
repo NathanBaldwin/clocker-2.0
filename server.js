@@ -16,9 +16,6 @@ const PORT = process.env.PORT || 3000
 const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2'
 
-//use jade to render templates:
-app.set('view engine', 'jade');
-
 //MIDDLEWARE:
 
 app.use(bodyParser.urlencoded({
@@ -40,8 +37,8 @@ app.use(passport.session())
 app.use(express.static('public'));
 
 
-//ROUTES
-// app.use(routes)
+// ROUTES
+app.use(routes)
 
 //DATABASE AND SERVER
 //connect to specified mongodb before starting server:
