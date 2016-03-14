@@ -1,8 +1,8 @@
 'use strict'
 
 const passport = require('passport')
-const Admin = require('../models/admin.model.js')
-const Visitor = require('../models/admin.visitor.model.js')
+const Admin = require('../models/admin.model')
+const visitor = require('../models/admin.visitor.model')
 
 module.exports = {
   getAdminObj: (req, res) => {
@@ -39,9 +39,21 @@ module.exports = {
     console.log("req.body", req.body);
     Admin.findById(req.user, (err, adminData) => {
       if (err) throw err
-      adminData.visitors.addToSet(req.body)
-      adminData.save()
-      // res.send(adminData.visitors)
+      console.log("req.body.visitorEmail", req.body.visitorEmail);
+      console.log("req.body.visitorFirstName", req.body.visitorFirstName);
+      console.log("req.body.visitorLastName", req.body.visitorLastName);
+      
+      var newVisitor = new visitor.model({
+        visitorEmail: req.body.visitorEmail,
+        visitorFirstName: req.body.visitorFirstName,
+        visitorLastName: req.body.visitorLastName
+      })
+      adminData.visitors.push(newVisitor)
+      adminData.save((err) => {
+        if (err) throw err
+        // console.log("data:", data);
+        res.send('success')
+      })
     })
   }
 }

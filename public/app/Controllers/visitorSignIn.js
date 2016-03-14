@@ -26,7 +26,8 @@
           "visitorFirstName": $scope.firstName,
           "visitorLastName": $scope.lastName,
         }
-
+        //addto rootscope object
+        //send response back to browser
         $http.post('/adminObj/visitors', newVisitor, {
             headers: {
               'Content-Type': 'application/json'

@@ -21,6 +21,11 @@ app.set('view engine', 'jade');
 
 //MIDDLEWARE:
 
+app.use(bodyParser.urlencoded({
+  extended:false
+}))
+
+app.use(bodyParser.json())
 
 app.use(session({
   secret: "secret key",
@@ -30,11 +35,6 @@ app.use(session({
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(bodyParser.urlencoded({
-  extended:false
-}))
-
-app.use(bodyParser.json())
 
 // create paths to public directory:
 app.use(express.static('public'));
