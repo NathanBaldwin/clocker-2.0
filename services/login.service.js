@@ -14,7 +14,7 @@ passport.serializeUser(function(user, done) {//parses user object that gets sent
 });
 
 passport.deserializeUser(function(id, done) {//first parameter is req.session.passport.user (which we spedified above to just be our userid)
-  Admin.findById(id, done);//specifies what we want req.user to be
+  done(null, id);//specifies what we want req.user to be
 });
 
 passport.use(new LocalStrategy({

@@ -28,6 +28,6 @@ app
     }])
   .run(['$rootScope', '$resource',
     function($rootScope, $resource) {
-      $rootScope.adminData = $resource('/testApi').get()
+      $rootScope.adminObj = $resource('/adminObj').get()
 
     }])
