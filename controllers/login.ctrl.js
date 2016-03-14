@@ -9,7 +9,7 @@ loginService //initializing login service. This is where we configure for passpo
 module.exports = {
   //GET /login:
   index: (req, res) => {
-    res.render('login')
+    res.sendFile(path.join(__dirname, '../public', 'index.html'))
   },
   //POST /login:
   //passport.authenticate method looks at our local strategy. Depending on result of done() in our local strategy

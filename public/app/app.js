@@ -24,7 +24,7 @@ app
         templateUrl: 'Partials/backend-people.html',
         controller: 'backend-people'
       })
-      .otherwise('/clocker/visitorsignin');
+      .otherwise('/clocker/login');
     }])
   .run(['$rootScope', '$resource',
     function($rootScope, $resource) {

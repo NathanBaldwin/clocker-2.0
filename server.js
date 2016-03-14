@@ -39,8 +39,9 @@ app.use(passport.session())
 // create paths to public directory:
 app.use(express.static('public'));
 
+
 //ROUTES
-app.use(routes)
+// app.use(routes)
 
 //DATABASE AND SERVER
 //connect to specified mongodb before starting server:
