@@ -15,7 +15,7 @@
           .success(function(uid) {
             console.log("user info returned:", uid);
             $rootScope.uid = uid
-            $rootScope.watchForRefresh = true //each time visitor and backend controllers load
+            $rootScope.refreshIndicator = true //each time visitor and backend controllers load
             //we'll check this variable. If false, we'll make a query to db to refresh data stored
             //on $rootScope
             $rootScope.adminObj = {

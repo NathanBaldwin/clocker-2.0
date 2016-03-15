@@ -1,20 +1,35 @@
 (function() {
   'use strict'
 
-  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location",
-    function($scope, $rootScope, $http, $location) {
+  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location", "query",
+    function($scope, $rootScope, $http, $location, $query) {
     	console.log("I see admin visitor sign in controller!")
 
+      //when controller loads, check to see if user data is on $rootScope
+      //if user has refreshed the page, it won't be there so, we'll go to api to get it
+      //if user is not logged in, api send 'error' response, which angular will handle with redirect
+      //tabling redirect code for now
+      if(!$rootScope.refreshIndicator) {
+        getAdminData()
+      } else {
+        // get array of visitor objects from adminObj, which stored on rootScope on module.run:
+        $scope.pastVisitors = $rootScope.adminObj.visitors        
+      }
       //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
 
-      // #### PAST VISITOR SEARCH ###
-      // get array of visitor objects from adminObj, which stored on rootScope on module.run:
+
+      function getAdminData() {
+        $query.getUserObj()
+          .then(function(adminObj) {
+          console.log("DATA RETURNED FROM PROMISE:", adminObj)
+          $rootScope.adminObj = adminObj
+          $scope.pastVisitors = $rootScope.adminObj.visitors
+        })
+      }
       
-      $scope.pastVisitors = $rootScope.adminObj.visitors
 
       //on click of 'Sign In' button, search through past visitors to see if current visitor is in the db:
       $scope.findVisitor = function() {
-        console.log("you clicked find visitor!");
         $("#noMatchModal").modal("show");
       }
 
@@ -34,13 +49,18 @@
       }
 
       //on click of 'other' group, enable user to enter and save new group:
-      $scope.enterNewGroupName = function() {
-        console.log("you clicked on OTHER!");
+      $scope.showGroupModal = function() {
         console.log("$scope.group", $scope.group);
         $("#createNewGroupModal").modal('show');
       }
 
+      //on click of 'save' in modal, save group name to groups subdocument in adminObj
+      $scope.createNewGroup = function() {
+    groupsRef.push($scope.newGroupName);
+    $scope.group = $scope.newGroupName;
 
+    $("#createNewGroupModal").modal('hide');
+  }
 
   }]);
 })()
