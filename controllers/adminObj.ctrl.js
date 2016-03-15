@@ -10,7 +10,7 @@ module.exports = {
     // check to see if user is logged in/has active session:
     //if not, redirect to login
     if (!req.user) {
-      res.redirect('/login')
+      res.send("I don't think you're logged in")
     }
     //find logged in user's admin object:
     Admin.findById(req.user, (err, adminData) => {

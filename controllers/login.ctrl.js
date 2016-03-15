@@ -21,9 +21,7 @@ module.exports = {
       }
       if (!user) {//if auth fails
           console.log("user:", user);
-          return res.render('login', {
-            message: "There was a problem with you username or password. Give it another shot."
-          })
+          return res.send('no login for you!')
         }
       //req.logIn tells passport to log user in and passes
       //user object through serialize config (specified in login service)
@@ -34,12 +32,11 @@ module.exports = {
         console.log("req.user", req.user);
         console.log("req.session.passport.user", req.session.passport.user);
         let uid = req.session.passport.user
-        //### SERVE ANGULAR APP ######
-        //create an absolute path to serve angular app
+  
         return res.send(uid)
-        // res.redirect('/users/' + user.username);
       })
     })(req, res, next)
   }
 }
+
 

@@ -13,7 +13,8 @@
         getAdminData()
       } else {
         // get array of visitor objects from adminObj, which stored on rootScope on module.run:
-        $scope.pastVisitors = $rootScope.adminObj.visitors        
+        $scope.pastVisitors = $rootScope.adminObj.visitors
+        $scope.groups = $rootScope.adminObj.groups    
       }
       //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
 
@@ -24,6 +25,7 @@
           console.log("DATA RETURNED FROM PROMISE:", adminObj)
           $rootScope.adminObj = adminObj
           $scope.pastVisitors = $rootScope.adminObj.visitors
+          $scope.groups = $rootScope.adminObj.groups
         })
       }
       
@@ -56,11 +58,15 @@
 
       //on click of 'save' in modal, save group name to groups subdocument in adminObj
       $scope.createNewGroup = function() {
-    groupsRef.push($scope.newGroupName);
-    $scope.group = $scope.newGroupName;
+        var newGroup = {
+          newGroupName: $scope.newGroupName
+        }
+        $rootScope.adminObj.groups.push($scope.newGroupName)
+        $query.addGroup(newGroup)
+        $("#createNewGroupModal").modal('hide');
+      }
 
-    $("#createNewGroupModal").modal('hide');
-  }
+      //figure out method to change everthing to arrays and store on rootscope!
 
   }]);
 })()

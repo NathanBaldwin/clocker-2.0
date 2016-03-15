@@ -4,8 +4,9 @@ const express = require('express')
 const flash = require('connect-flash')
 const app = express()
 const mongoose = require('mongoose')
-const passport = require('passport')
 const session = require('express-session')
+const RedisStore = require('connect-redis')(session)
+const passport = require('passport')
 // const flash = require('connect-flash')
 
 const bodyParser = require('body-parser')
@@ -21,11 +22,11 @@ const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2'
 app.use(bodyParser.urlencoded({
   extended:false
 }))
-
 app.use(bodyParser.json())
 
 app.use(session({
   secret: "secret key",
+  store: new RedisStore,
   resave: true,
   saveUninitialized: false
 }))

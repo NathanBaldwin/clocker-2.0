@@ -2,7 +2,7 @@
 
 const passport = require('passport')
 const Admin = require('../models/admin.model')
-const visitor = require('../models/admin.visitor.model')
+const Visitor = require('../models/admin.visitor.model')
 
 module.exports = {
 
@@ -28,7 +28,7 @@ module.exports = {
       console.log("req.body.visitorFirstName", req.body.visitorFirstName);
       console.log("req.body.visitorLastName", req.body.visitorLastName);
       
-      var newVisitor = new visitor.model({
+      var newVisitor = new Visitor.model({
         visitorEmail: req.body.visitorEmail,
         visitorFirstName: req.body.visitorFirstName,
         visitorLastName: req.body.visitorLastName
