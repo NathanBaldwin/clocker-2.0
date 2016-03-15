@@ -6,14 +6,18 @@ const router = express.Router();
 // const login = require('./login')
 const register = require('./register')
 const login = require('./login')
-const api = require('./api')
+const visitors = require('./visitors.route')
+const groups = require('./groups.route')
 const catchAll = require('./default')
+const adminObj = require('./adminObj.route')
 
 
 //waterfall of routes:
 router.use(register)
 router.use(login)
-router.use(api)
+router.use(adminObj)
+router.use(visitors)
+router.use(groups)
 
 //catchall route redirects to angular app:
 router.use(catchAll)

@@ -5,21 +5,6 @@ const Admin = require('../models/admin.model')
 const visitor = require('../models/admin.visitor.model')
 
 module.exports = {
-  getAdminObj: (req, res) => {
-    console.log("requested data from API");
-    console.log("req.user", req.user);
-    // check to see if user is logged in/has active session:
-    //if not, redirect to login
-    if (!req.user) {
-      res.redirect('/login')
-    }
-    //find logged in user's admin object:
-    Admin.findById(req.user, (err, adminData) => {
-      if (err) throw err
-      console.log("adminData returned from db:", adminData);
-      res.send(adminData)
-    })
-  },
 
   getVisitors: (req, res) => {
     if (!req.user) {
@@ -51,7 +36,6 @@ module.exports = {
       adminData.visitors.push(newVisitor)
       adminData.save((err) => {
         if (err) throw err
-        // console.log("data:", data);
         res.send('success')
       })
     })

@@ -29,7 +29,5 @@ app
     }])
   .run(['$rootScope', '$resource',
     function($rootScope, $resource) {
-      // $rootScope.adminObj = $resource('/adminObj').get()
-      // $rootScope.pastVisitors = $resource('/adminObj/visitors/:id').query()//query assumes 'isArray=true'
 
     }])
