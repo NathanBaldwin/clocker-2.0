@@ -102,16 +102,12 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	            <div ng-repeat="name in match">
-					      <div>
-					      	<h4>Are you {{name.visitorFirstName}} {{name.visitorLastName}}?</h4>
-					      </div>
-					    
-					    </div>
-            
+					      <h4>Are you {{name.visitorFirstName}} {{name.visitorLastName}}?</h4>
+					    </div>  
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-default" ng-click="showActivityModal()">Yes - sign me in!</button>
+            <button type="button" class="btn btn-default" >Yes - sign me in!</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

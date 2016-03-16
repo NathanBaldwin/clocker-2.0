@@ -49,7 +49,7 @@
         $scope.newActivityName = "";
         $scope.lastName = "";
         $scope.firstName = "";
-        $("#noMatchModal").modal('hide');
+        // $("#noMatchModal").modal('hide');
       }
 
       //on click of 'other' group, enable user to enter and save new group:
