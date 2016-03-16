@@ -10,6 +10,7 @@ const visitors = require('./visitors.route')
 const groups = require('./groups.route')
 const catchAll = require('./default')
 const adminObj = require('./adminObj.route')
+const activities = require('./activities.route')
 
 
 //waterfall of routes:
@@ -18,6 +19,8 @@ router.use(login)
 router.use(adminObj)
 router.use(visitors)
 router.use(groups)
+router.use(activities)
+
 
 //catchall route redirects to angular app:
 router.use(catchAll)

@@ -2,28 +2,27 @@
 
 // const passport = require('passport')
 const Admin = require('../models/admin.model')
-const visitor = require('../models/admin.visitor.model')
-const group = require('../models/admin.groups.model')
+const activity = require('../models/admin.activity.model')
 
 module.exports = {
-  getGroups: (req, res) => {
+  getActivities: (req, res) => {
     if (!req.user) {
       res.send('fail')
     }
     Admin.findById(req.user, (err, adminData) => {
       if (err) throw err
-      res.send(adminData.groups)
+      res.send(adminData.activities)
     })
   },
-  addGroups: (req, res) => {
+  addActivity: (req, res) => {
     Admin.findById(req.user, (err, adminData) => {
       if (err) throw err
-      console.log("req.body.newGroupName", req.body.newGroupName);
+      console.log("req.body.activityName", req.body.activityName);
       
-      var newGroup = new group.model({
-        groupName: req.body.newGroupName
+      var newActivity = new activity.model({
+        activityName: req.body.activityName
       })
-      adminData.groups.push(newGroup)
+      adminData.activityNames.push(newActivity)
       adminData.save((err) => {
         if (err) throw err
         res.send('success')

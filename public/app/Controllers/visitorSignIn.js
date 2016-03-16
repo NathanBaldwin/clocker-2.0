@@ -66,7 +66,20 @@
         $("#createNewGroupModal").modal('hide');
       }
 
-      //figure out method to change everthing to arrays and store on rootscope!
+      $scope.showActivityModal = function() {
+        console.log("you clicked on activty select!");
+        $("#enterNewActivityModal").modal('show');
+      }
+
+      $scope.createNewActivityName = function() {
+        console.log("you clicked create new activity!!!");
+        var newActivity = {
+          activityName: $scope.newActivityName
+        }
+        $scope.activity = $scope.newActivityName;
+        $("#enterNewActivityModal").modal('hide');
+        $query.addActivity(newActivity)
+      }
 
   }]);
 })()

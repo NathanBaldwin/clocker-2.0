@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 
 const visitor = require('./admin.visitor.model')
 const groups = require('./admin.groups.model')
+const activities = require('./admin.activity.model')
 
 //create simple schema for Admin document. Email must be unique:
 const AdminSchema = mongoose.Schema({
@@ -13,7 +14,8 @@ const AdminSchema = mongoose.Schema({
   email: {type: String, unique: true},
   password: String,
   visitors: [visitor.schema],
-  groups: [groups.schema]
+  groups: [groups.schema],
+  activityNames: [activities.schema]
 })
 
 

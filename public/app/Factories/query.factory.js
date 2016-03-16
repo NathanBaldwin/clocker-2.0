@@ -9,6 +9,9 @@
         },
         addGroup: function(newGroupName) {
           return $httpPOST('adminObj/groups', newGroupName)
+        },
+        addActivity: function(newActivity) {
+          return $httpPOST('adminObj/activities', newActivity)
         }
       }
     }
