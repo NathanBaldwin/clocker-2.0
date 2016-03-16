@@ -7,6 +7,9 @@
         getUserObj: function() {
           return $httpGET('/adminObj')
         },
+        addVisitor: function(newVisitorName) {
+          return $httpPOST('adminObj/visitors', newVisitorName)
+        },
         addGroup: function(newGroupName) {
           return $httpPOST('adminObj/groups', newGroupName)
         },

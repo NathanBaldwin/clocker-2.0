@@ -22,9 +22,9 @@
 						    Select Group <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu">
-						    <li ng-repeat="group in groupsArray">
+						    <li ng-repeat="group in groups">
 		            	<a ng-click="setSelectedGroup()">
-		            		<span class="dropdown-spacing">{{group.$value}}</span>
+		            		<span class="dropdown-spacing">{{group.groupName}}</span>
 		            		
 		            	</a>
 		             </li>
@@ -45,9 +45,9 @@
 						    Select Event/Activity <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu">
-						    <li ng-repeat="activityName in activityNamesArray">
+						    <li ng-repeat="activityName in activityNames">
 		            	<a ng-click="setSelectedActivity()">
-		            		<span class="dropdown-spacing">{{activityName.$value}}</span>
+		            		<span class="dropdown-spacing">{{activityName.activityName}}</span>
 		            		
 		            	</a>
 		             </li>
@@ -103,7 +103,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	            <div ng-repeat="name in match">
 					      <div>
-					      	<h4>Are you {{name.firstName}} {{name.lastName}}?</h4>
+					      	<h4>Are you {{name.visitorFirstName}} {{name.visitorLastName}}?</h4>
 					      </div>
 					    
 					    </div>

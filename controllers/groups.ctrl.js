@@ -18,10 +18,10 @@ module.exports = {
   addGroups: (req, res) => {
     Admin.findById(req.user, (err, adminData) => {
       if (err) throw err
-      console.log("req.body.newGroupName", req.body.newGroupName);
+      console.log("req.body.groupName", req.body.groupName);
       
       var newGroup = new group.model({
-        groupName: req.body.newGroupName
+        groupName: req.body.groupName
       })
       adminData.groups.push(newGroup)
       adminData.save((err) => {

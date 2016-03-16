@@ -18,11 +18,7 @@
             $rootScope.refreshIndicator = true //each time visitor and backend controllers load
             //we'll check this variable. If false, we'll make a query to db to refresh data stored
             //on $rootScope
-            $rootScope.adminObj = {
-              visitors: [],
-              groups: [],
-              activities: []
-            }
+            $rootScope.adminObj = {}
             $location.path('/visitorsignin')
 
             $query.getUserObj()

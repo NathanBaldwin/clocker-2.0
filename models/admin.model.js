@@ -18,8 +18,6 @@ const AdminSchema = mongoose.Schema({
   activityNames: [activities.schema]
 })
 
-
-
 module.exports = mongoose.model('adminaccounts', AdminSchema)
 
 

@@ -14,7 +14,8 @@
       } else {
         // get array of visitor objects from adminObj, which stored on rootScope on module.run:
         $scope.pastVisitors = $rootScope.adminObj.visitors
-        $scope.groups = $rootScope.adminObj.groups    
+        $scope.groups = $rootScope.adminObj.groups
+        $scope.activityNames = $rootScope.adminObj.activityNames   
       }
       //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
 
@@ -26,13 +27,8 @@
           $rootScope.adminObj = adminObj
           $scope.pastVisitors = $rootScope.adminObj.visitors
           $scope.groups = $rootScope.adminObj.groups
+          $scope.activityNames = $rootScope.adminObj.activityNames
         })
-      }
-      
-
-      //on click of 'Sign In' button, search through past visitors to see if current visitor is in the db:
-      $scope.findVisitor = function() {
-        $("#noMatchModal").modal("show");
       }
 
       //modal submission: create new visitor object to be saved
@@ -43,43 +39,80 @@
           "visitorLastName": $scope.lastName,
         }
         //add new visitor object as sub document to adminObj
-        $http.post('/adminObj/visitors', newVisitor, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-        })
+        $query.addVisitor(newVisitor)
+        $rootScope.adminObj.visitors.push(newVisitor)
+
+        $scope.group = "";
+        $scope.activity = "";
+        $scope.email = "";
+        $scope.newGroupName = "";
+        $scope.newActivityName = "";
+        $scope.lastName = "";
+        $scope.firstName = "";
+        $("#noMatchModal").modal('hide');
       }
 
       //on click of 'other' group, enable user to enter and save new group:
       $scope.showGroupModal = function() {
-        console.log("$scope.group", $scope.group);
         $("#createNewGroupModal").modal('show');
       }
 
       //on click of 'save' in modal, save group name to groups subdocument in adminObj
       $scope.createNewGroup = function() {
         var newGroup = {
-          newGroupName: $scope.newGroupName
+          groupName: $scope.newGroupName
         }
-        $rootScope.adminObj.groups.push($scope.newGroupName)
+        $rootScope.adminObj.groups.push(newGroup)
         $query.addGroup(newGroup)
+        $scope.group = $scope.newGroupName
         $("#createNewGroupModal").modal('hide');
       }
 
       $scope.showActivityModal = function() {
-        console.log("you clicked on activty select!");
         $("#enterNewActivityModal").modal('show');
       }
 
       $scope.createNewActivityName = function() {
-        console.log("you clicked create new activity!!!");
         var newActivity = {
           activityName: $scope.newActivityName
         }
         $scope.activity = $scope.newActivityName;
+        $rootScope.adminObj.activityNames.push(newActivity)
         $("#enterNewActivityModal").modal('hide');
         $query.addActivity(newActivity)
       }
+
+      $scope.setSelectedActivity = function () {
+        $scope.activity = this.activityName.activityName
+      }
+
+      $scope.setSelectedGroup = function () {
+        $scope.group = this.group.groupName
+      }
+
+      //on click of 'Sign In' button, search through past visitors to see if current visitor is in the db:
+      $scope.findVisitor = function() {
+        console.log("pastVisitors data:", $scope.pastVisitors);
+        //use lodash to loop through array of past visitor objects
+        //return the object if emails match
+        $scope.match = _.filter($scope.pastVisitors, function(visitorObj) {
+          //make both emails lowercase to normalize comparison
+          if (_.includes(visitorObj.visitorEmail.toLowerCase(), $scope.email.toLowerCase())) {
+            console.log("obj includes", visitorObj.email);
+            return visitorObj;
+          }
+        });
+        //if filter function returned any matches, ask visitor to verify identity
+        //if no match was found, show modal to create new visitor:
+        console.log("matching visitor object(s):", $scope.match);
+        if ($scope.match.length < 1) {
+          $("#noMatchModal").modal("show");
+        } else {
+          $("#foundMatchModal").modal("show");
+        };    
+      }
+
+
 
   }]);
 })()
