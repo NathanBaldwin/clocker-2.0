@@ -11,6 +11,7 @@ const groups = require('./groups.route')
 const catchAll = require('./default')
 const adminObj = require('./adminObj.route')
 const activities = require('./activities.route')
+const activityLog = require('./activityLog.route')
 
 
 //waterfall of routes:
@@ -20,6 +21,7 @@ router.use(adminObj)
 router.use(visitors)
 router.use(groups)
 router.use(activities)
+router.use(activityLog)
 
 
 //catchall route redirects to angular app:

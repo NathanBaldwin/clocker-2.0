@@ -1,6 +1,7 @@
 'use strict'
 
 const Admin = require('../models/admin.model')
+const ActivityLog = require('../models/activityLogs.model')
 const bcrypt = require('bcrypt')
 const hashDifficulty = 11
 
@@ -13,12 +14,27 @@ module.exports = (enteredPassword, req, res) => { //can't use fat arrows because
     if (err) throw err
     //set hashed password as req.body.password:
     req.body.password = hash
+    //create new admin document:
     Admin.create(req.body, (err) => {
       if (err) throw err
       console.log("NEW USER CREATED")
-      res.send(req.body)
-      // res.redirect('/login')
-    })  
+      //if successful, query for that user's admin doc to get their id so we
+      //can create their activitly logs doc and store their id in it for reference.
+      Admin.findOne({email: req.body.email}, (err, user) => {
+        if(err) throw err
+        if (user) {
+          //create new user's activity log document:
+          ActivityLog.create({
+            email: user.email,
+            adminId: user._id
+          }, (err) => {
+            if (err) throw err
+            console.log("NEW ACTIVITY DOCUMENT CREATED")
+            res.send(req.body)
+          })
+        }
+      })  
+    })
   })
 }
 
