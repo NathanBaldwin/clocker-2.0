@@ -13,9 +13,9 @@
         getAdminData()
       } else {
         // get array of visitor objects from adminObj, which stored on rootScope on module.run:
-        $scope.pastVisitors = $rootScope.adminObj.visitors
-        $scope.groups = $rootScope.adminObj.groups
-        $scope.activityNames = $rootScope.adminObj.activityNames   
+        $scope.pastVisitors = $rootScope.adminObj.visitors || []
+        $scope.groups = $rootScope.adminObj.groups || []
+        $scope.activityNames = $rootScope.adminObj.activityNames || []  
       }
       //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
 
@@ -25,9 +25,9 @@
           .then(function(adminObj) {
           console.log("DATA RETURNED FROM PROMISE:", adminObj)
           $rootScope.adminObj = adminObj
-          $scope.pastVisitors = $rootScope.adminObj.visitors
-          $scope.groups = $rootScope.adminObj.groups
-          $scope.activityNames = $rootScope.adminObj.activityNames
+          $scope.pastVisitors = $rootScope.adminObj.visitors || []
+          $scope.groups = $rootScope.adminObj.groups || []
+          $scope.activityNames = $rootScope.adminObj.activityNames || []
         })
       }
 

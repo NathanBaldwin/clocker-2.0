@@ -15,6 +15,9 @@
         },
         addActivity: function(newActivity) {
           return $httpPOST('adminObj/activities', newActivity)
+        },
+        getAllUserData: function() {
+          return $httpGET('/allUserData')
         }
       }
     }

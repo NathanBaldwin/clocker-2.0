@@ -26,11 +26,11 @@
               console.log("DATA RETURNED FROM PROMISE:", adminObj)
               $rootScope.adminObj = adminObj
             })
-           
 
-            //on success of login, get data for user and store to $rootScope
-            //check to see what happens to rootscope on refresh
-            
+            $query.getAllUserData()
+              .then(function(userData) {
+                console.log("all returned user data:", userData);
+              })
          })
           .error(function(error, status) {
             console.log("status:", status)
