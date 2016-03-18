@@ -12,5 +12,6 @@ Currently in progress as my final capstone for NSS, my goals are as follows:
 2. Create an authentication strategy using Node.js, Express, Bcrypt, Passport and Redis.
 3. Create an API using MongoDB and Mongoose.
 4. Better understand and employ MVC structure.
-4. Deployment on Digital Ocean using NGINX as a proxy server.
+5. Deployment on Digital Ocean using NGINX as a proxy server.
+6. Refactor Angular code now that I have a better understanding of how Angular can be used.
 5. Create a mobile component using Ionic and WebSockets to enable remote, location-based sign-ins.
