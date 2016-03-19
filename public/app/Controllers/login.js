@@ -21,15 +21,16 @@
             $rootScope.adminObj = {}
             $location.path('/visitorsignin')
 
-            $query.getUserObj()
-              .then(function(adminObj) {
-              console.log("DATA RETURNED FROM PROMISE:", adminObj)
-              $rootScope.adminObj = adminObj
-            })
+            // $query.getUserObj()
+            //   .then(function(adminObj) {
+            //   console.log("DATA RETURNED FROM PROMISE:", adminObj)
+            //   $rootScope.adminObj = adminObj
+            // })
 
             $query.getAllUserData()
               .then(function(userData) {
                 console.log("all returned user data:", userData);
+                $rootScope.userData = userData
               })
          })
           .error(function(error, status) {

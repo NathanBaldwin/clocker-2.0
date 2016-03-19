@@ -13,21 +13,21 @@
         getAdminData()
       } else {
         // get array of visitor objects from adminObj, which stored on rootScope on module.run:
-        $scope.pastVisitors = $rootScope.adminObj.visitors || []
-        $scope.groups = $rootScope.adminObj.groups || []
-        $scope.activityNames = $rootScope.adminObj.activityNames || []  
+        $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
+        $scope.groups = $rootScope.userData.adminObj.groups || []
+        $scope.activityNames = $rootScope.userData.adminObj.activityNames || []  
       }
       //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
 
 
       function getAdminData() {
-        $query.getUserObj()
-          .then(function(adminObj) {
-          console.log("DATA RETURNED FROM PROMISE:", adminObj)
-          $rootScope.adminObj = adminObj
-          $scope.pastVisitors = $rootScope.adminObj.visitors || []
-          $scope.groups = $rootScope.adminObj.groups || []
-          $scope.activityNames = $rootScope.adminObj.activityNames || []
+        $query.getAllUserData()
+          .then(function(userData) {
+          console.log("DATA RETURNED FROM PROMISE:", userData)
+          $rootScope.userData = userData
+          $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
+          $scope.groups = $rootScope.userData.adminObj.groups || []
+          $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
         })
       }
 
@@ -40,7 +40,7 @@
         }
         //add new visitor object as sub document to adminObj
         $query.addVisitor(newVisitor)
-        $rootScope.adminObj.visitors.push(newVisitor)
+        $rootScope.userData.adminObj.visitors.push(newVisitor)
 
         $scope.group = "";
         $scope.activity = "";
@@ -62,7 +62,7 @@
         var newGroup = {
           groupName: $scope.newGroupName
         }
-        $rootScope.adminObj.groups.push(newGroup)
+        $rootScope.userData.adminObj.groups.push(newGroup)
         $query.addGroup(newGroup)
         $scope.group = $scope.newGroupName
         $("#createNewGroupModal").modal('hide');
@@ -77,7 +77,7 @@
           activityName: $scope.newActivityName
         }
         $scope.activity = $scope.newActivityName;
-        $rootScope.adminObj.activityNames.push(newActivity)
+        $rootScope.userData.adminObj.activityNames.push(newActivity)
         $("#enterNewActivityModal").modal('hide');
         $query.addActivity(newActivity)
       }

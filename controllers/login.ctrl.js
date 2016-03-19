@@ -7,13 +7,6 @@ const loginService = require('../services/login.service')
 loginService //initializing login service. This is where we configure for passport's local strategy - how we are authenticating passwords
 
 module.exports = {
-  //GET /login:
-  // index: (req, res) => {
-  //   res.sendFile(path.join(__dirname, '../public', 'index.html'))
-  // },
-  //POST /login:
-  //passport.authenticate method looks at our local strategy. Depending on result of done() in our local strategy
-  //'user' argument is either true or false
   login: (req, res, next) => {
     passport.authenticate('local', (err, user) => {
       if (err) { 

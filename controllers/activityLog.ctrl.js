@@ -11,9 +11,12 @@ module.exports = {
     if (!req.user) {
       res.send('fail')
     }
-    ActivityLog.findOne({adminId: req.user}, (err, userData) => {
-      if (err) throw err
-      res.send('got all your activities here:', userData)
-    })
+    //get user's activity log data suing their uid from req.body
+    ActivityLog.findOne({adminId: req.user})
+      .populate('adminObj')
+      .exec((err, allUserData) => {
+        console.log("allUserData", allUserData)
+        res.send(allUserData)
+      })
   }
 }

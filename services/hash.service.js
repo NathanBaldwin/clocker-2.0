@@ -25,8 +25,9 @@ module.exports = (enteredPassword, req, res) => { //can't use fat arrows because
         if (user) {
           //create new user's activity log document:
           ActivityLog.create({
+            adminId: user._id,
             email: user.email,
-            adminId: user._id
+            adminObj: user._id
           }, (err) => {
             if (err) throw err
             console.log("NEW ACTIVITY DOCUMENT CREATED")
@@ -37,4 +38,3 @@ module.exports = (enteredPassword, req, res) => { //can't use fat arrows because
     })
   })
 }
-
