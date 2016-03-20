@@ -18,6 +18,9 @@
         },
         getAllUserData: function() {
           return $httpGET('/allUserData')
+        },
+        createEvent: function(newEvent) {
+          return $httpPOST('/activityLogs', newEvent)
         }
       }
     }

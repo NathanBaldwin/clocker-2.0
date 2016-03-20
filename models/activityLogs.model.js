@@ -1,14 +1,14 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const loginEvent = require('./activityLog.signInEvent')
+const event = require('./activityLogs.event.model')
 // const AdminAccounts = require('./admin.model.js')
 
 //create simple schema for Admin document. Email must be unique:
 const activityLogSchema = mongoose.Schema({
   adminId: String,
   email: String,
-  activityLog: [loginEvent.schema],
+  activityLog: [event.schema],
   adminObj: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'adminaccounts'

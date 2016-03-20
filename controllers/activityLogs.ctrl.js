@@ -5,6 +5,7 @@ const Admin = require('../models/admin.model')
 const activity = require('../models/admin.activity.model')
 
 const ActivityLog = require('../models/activityLogs.model')
+const Event = require('../models/activityLogs.event.model')
 
 module.exports = {
   getAllUserData: (req, res) => {
@@ -18,5 +19,21 @@ module.exports = {
         console.log("allUserData", allUserData)
         res.send(allUserData)
       })
-  }
+  },
+  addEvent: (req, res) => {
+    ActivityLog.findOne({adminId: req.user}, (err, events) => {
+      if (err) throw err
+      let eventObj = req.body
+      console.log("EVENT OBJ", eventObj);
+
+      let newEvent = new Event.model(eventObj)
+
+      events.activityLog.push(newEvent)
+      events.save((err) => {
+        console.log("SUCCESSFULLY SAVED NEW EVENT", newEvent);
+        res.send('success')
+      })
+
+    })
+  } 
 }

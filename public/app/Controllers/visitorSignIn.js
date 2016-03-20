@@ -65,11 +65,11 @@
         $rootScope.userData.adminObj.groups.push(newGroup)
         $query.addGroup(newGroup)
         $scope.group = $scope.newGroupName
-        $("#createNewGroupModal").modal('hide');
+        $("#createNewGroupModal").modal('hide')
       }
 
       $scope.showActivityModal = function() {
-        $("#enterNewActivityModal").modal('show');
+        $("#enterNewActivityModal").modal('show')
       }
 
       $scope.createNewActivityName = function() {
@@ -78,7 +78,7 @@
         }
         $scope.activity = $scope.newActivityName;
         $rootScope.userData.adminObj.activityNames.push(newActivity)
-        $("#enterNewActivityModal").modal('hide');
+        $("#enterNewActivityModal").modal('hide')
         $query.addActivity(newActivity)
       }
 
@@ -92,27 +92,36 @@
 
       //on click of 'Sign In' button, search through past visitors to see if current visitor is in the db:
       $scope.findVisitor = function() {
-        console.log("pastVisitors data:", $scope.pastVisitors);
+        console.log("pastVisitors data:", $scope.pastVisitors)
         //use lodash to loop through array of past visitor objects
         //return the object if emails match
         $scope.match = _.filter($scope.pastVisitors, function(visitorObj) {
           //make both emails lowercase to normalize comparison
           if (_.includes(visitorObj.visitorEmail.toLowerCase(), $scope.email.toLowerCase())) {
-            console.log("obj includes", visitorObj.email);
-            return visitorObj;
+            console.log("obj includes", visitorObj.email)
+            return visitorObj
           }
-        });
+        })
         //if filter function returned any matches, ask visitor to verify identity
         //if no match was found, show modal to create new visitor:
-        console.log("matching visitor object(s):", $scope.match);
+        console.log("matching visitor object(s):", $scope.match)
         if ($scope.match.length < 1) {
-          $("#noMatchModal").modal("show");
+          $("#noMatchModal").modal("show")
         } else {
-          $("#foundMatchModal").modal("show");
-        };    
+          $("#foundMatchModal").modal("show")
+        }    
+      }
+
+      //
+      $scope.createNewEvent = function() {
+        console.log("you clicked 'create new event!")
+        var newEvent = {
+          activity: $scope.activity
+        }
+        $query.createEvent(newEvent)
+
       }
 
 
-
-  }]);
+  }])
 })()
