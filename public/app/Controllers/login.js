@@ -18,21 +18,15 @@
             $rootScope.refreshIndicator = true //each time visitor and backend controllers load
             //we'll check this variable. If false, we'll make a query to db to refresh data stored
             //on $rootScope
-            $rootScope.adminObj = {}
+            $rootScope.userData = {}
             $location.path('/visitorsignin')
-
-            // $query.getUserObj()
-            //   .then(function(adminObj) {
-            //   console.log("DATA RETURNED FROM PROMISE:", adminObj)
-            //   $rootScope.adminObj = adminObj
-            // })
 
             $query.getAllUserData()
               .then(function(userData) {
                 console.log("all returned user data:", userData);
                 $rootScope.userData = userData
               })
-         })
+            })
           .error(function(error, status) {
             console.log("status:", status)
             $location.path('/login')

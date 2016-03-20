@@ -80,7 +80,7 @@
 						<th>Group</th>
 						<th></th>
 					</tr>
-					<tr ng-repeat="visitor in currentVisitorsArray | filter: visitor.signedIn = true">
+					<tr ng-repeat="visitor in userData.activityLog | filter: visitor.signedIn = true">
 						<td>{{visitor.firstName}} {{visitor.lastName}}</td>
 						<td>{{visitor.inFormatted}}</td>
 						<td>{{visitor.activity}}</td>

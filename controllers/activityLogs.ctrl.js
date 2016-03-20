@@ -31,7 +31,7 @@ module.exports = {
       events.activityLog.push(newEvent)
       events.save((err) => {
         console.log("SUCCESSFULLY SAVED NEW EVENT", newEvent);
-        res.send('success')
+        res.send(newEvent)
       })
 
     })

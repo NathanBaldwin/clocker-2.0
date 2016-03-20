@@ -31,6 +31,16 @@
         })
       }
 
+      function clearFormInputs() {
+        $scope.group = ""
+        $scope.activity = ""
+        $scope.email = ""
+        $scope.newGroupName = ""
+        $scope.newActivityName = ""
+        $scope.lastName = ""
+        $scope.firstName = ""
+      }
+
       //modal submission: create new visitor object to be saved
       $scope.createNewVisitor = function() {
         var newVisitor = {
@@ -42,14 +52,11 @@
         $query.addVisitor(newVisitor)
         $rootScope.userData.adminObj.visitors.push(newVisitor)
 
-        $scope.group = "";
-        $scope.activity = "";
-        $scope.email = "";
-        $scope.newGroupName = "";
-        $scope.newActivityName = "";
-        $scope.lastName = "";
-        $scope.firstName = "";
-        // $("#noMatchModal").modal('hide');
+        $scope.createNewEvent()
+
+        $("#noMatchModal").modal('hide');
+
+        clearFormInputs()
       }
 
       //on click of 'other' group, enable user to enter and save new group:
@@ -108,6 +115,8 @@
         if ($scope.match.length < 1) {
           $("#noMatchModal").modal("show")
         } else {
+          $scope.firstName = $scope.match[0].visitorFirstName
+          $scope.lastName = $scope.match[0].visitorLastName
           $("#foundMatchModal").modal("show")
         }    
       }
@@ -115,10 +124,25 @@
       //
       $scope.createNewEvent = function() {
         console.log("you clicked 'create new event!")
+        console.log("$scope.match", $scope.match);
         var newEvent = {
-          activity: $scope.activity
+          activity: $scope.activity,
+          firstName: $scope.firstName,
+          lastName: $scope.lastName,
+          email: $scope.email,
+          group: $scope.group,
+          activity: $scope.activity,
+          inFormatted: moment().format('MMMM Do YYYY, h:mm:ss a'),
+          day: moment().format('MMMM Do, YYYY'),
+          in: moment().format(),
+          signedIn: true
         }
         $query.createEvent(newEvent)
+        .then(function(savedEvent) {
+          $rootScope.userData.activityLog.push(savedEvent)
+          clearFormInputs()
+          $("#foundMatchModal").modal('hide')
+        })
 
       }
 
