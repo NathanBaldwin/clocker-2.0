@@ -28,6 +28,7 @@
           $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
           $scope.groups = $rootScope.userData.adminObj.groups || []
           $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
+          arrayToObject(userData.activityLog)
         })
       }
 
@@ -143,6 +144,28 @@
           clearFormInputs()
           $("#foundMatchModal").modal('hide')
         })
+      }
+
+      function updateEvent(eventId) {
+
+      }
+
+      function findByIdAndUpdate(visitorLogArray, eventId) {
+        console.log("visitorLogArray", visitorLogArray)
+        var match = _(visitorLogArray).find({_id: eventId})
+        console.log("foundObject", match)
+        match.signedIn = false
+      }
+
+      $scope.signOut = function() {
+        console.log("you clicked sign out!")
+        console.log("event.target.id", event.target.id)
+
+        var eventId = event.target.id
+
+        findByIdAndUpdate($rootScope.userData.activityLog, eventId)
+
+
 
       }
 
