@@ -39,7 +39,7 @@ app.filter('beforeDateFilter', function(){
 app.filter('groupFilter', function(){
   return function(input, selectedGroups){
   	// console.log("groupFilter input", input);
-  	console.log("groupFilter selectedGroups", selectedGroups[0]);
+  	// console.log("groupFilter selectedGroups", selectedGroups[0]);
     var out = [];
 
     if (selectedGroups[0] === undefined) {

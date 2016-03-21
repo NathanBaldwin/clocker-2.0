@@ -17,7 +17,7 @@ app
       	templateUrl: 'Partials/visitorSignIn.html',
       	controller: 'visitorSignIn'
       })
-      .when('/backend/activity', {
+      .when('/backend', {
         templateUrl: 'Partials/backend-activity.html',
         controller: 'backend-activity'
       })

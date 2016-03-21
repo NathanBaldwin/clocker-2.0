@@ -49,9 +49,9 @@
           	</a>
           </li>
           <li class="divider"></li>
-          <li ng-repeat="group in groupsArray">
+          <li ng-repeat="group in adminObj.groups">
           	<a ng-click="setSelectedGroup(); openGroup()">
-          		<span class="dropdown-spacing">{{group.$value}}</span>
+          		<span class="dropdown-spacing">{{group.groupName}}</span>
           		<span ng-class="isChecked(group.$value)"></span>
           	</a>
            </li>
@@ -94,7 +94,7 @@
 				<div class="container-fluid">
 				<div class="row">
 					<div id="home-button-div" class="col-sm-1 col-sm-offset-11">
-						<a id="home-button" href="#/clocker/visitorsignin/" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+						<a id="home-button" href="#/visitorsignin" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
 					</div>
 				</div>
 
@@ -166,7 +166,7 @@
 						</tr>
 					</thead>
 					<tbody id="activity-table-body">
-						<tr ng-repeat-start="activity in filteredResults = (allActivitiesArray | afterDateFilter: selectedStart : startDateText | beforeDateFilter: selectedEnd : beforeDateText | groupFilter: selectedGroups | activityFilter: selectedActivities | filterBy: ['firstName + lastName']: searchName)" ng-if="compareActivities(activity)">
+						<tr ng-repeat-start="activity in filteredResults = (userData.activityLog)">
 							
 							<td class="no-side-border" colspan="6">{{activity.day}}</td>
 
