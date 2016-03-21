@@ -1,8 +1,10 @@
 'use strict'
 
 const express = require('express')
-const flash = require('connect-flash')
 const app = express()
+const server = require('http').createServer(app)
+const ws = require('socket.io')(server)
+const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
@@ -18,7 +20,6 @@ const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2'
 
 //MIDDLEWARE:
-
 app.use(bodyParser.urlencoded({
   extended:false
 }))
@@ -35,7 +36,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // create paths to public directory:
-app.use(express.static('public'));
+app.use(express.static('public'))
 
 
 // ROUTES
@@ -48,8 +49,13 @@ mongoose.connect(`mongodb://localhost:${MONGODB_PORT}/${MONGODB_DB_NAME}`)
 mongoose.connection.on('open', () => {
   console.log(`Mongo db: ${MONGODB_DB_NAME} open on port ${MONGODB_PORT}`);
 
-  app.listen(PORT, () => {
-    console.log(`Node.js server started. Listening on port ${PORT}`);
-  });
+  server.listen(PORT, () => {
+    console.log(`Node.js server started. Listening on port ${PORT}`)
+  })
+})
+
+//WEBSOCKET EVENT HANDLING:
+ws.on('connection', (socket) => {
+  console.log("socket connected!", socket.id)
 })
 

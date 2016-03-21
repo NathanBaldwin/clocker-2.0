@@ -1,8 +1,8 @@
 (function() {
   'use strict'
 
-  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location", "query",
-    function($scope, $rootScope, $http, $location, $query) {
+  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location", "query", "socket",
+    function($scope, $rootScope, $http, $location, $query, socket) {
     	console.log("I see admin visitor sign in controller!")
 
       //when controller loads, check to see if user data is on $rootScope
