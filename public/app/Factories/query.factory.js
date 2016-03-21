@@ -1,7 +1,7 @@
 (function() {
   'use strict'
-  app.factory('query', ["httpGET", "httpPOST",
-    function($httpGET, $httpPOST) {
+  app.factory('query', ["httpGET", "httpPOST", "httpPUT",
+    function($httpGET, $httpPOST, $httpPUT) {
 
       return {
         getUserObj: function() {
@@ -21,6 +21,9 @@
         },
         createEvent: function(newEvent) {
           return $httpPOST('/activityLogs', newEvent)
+        },
+        updateEvent: function(updatedEventObj) {
+          return $httpPUT('/activityLogs', updatedEventObj)
         }
       }
     }

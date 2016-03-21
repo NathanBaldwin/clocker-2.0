@@ -28,7 +28,7 @@
           $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
           $scope.groups = $rootScope.userData.adminObj.groups || []
           $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
-          arrayToObject(userData.activityLog)
+          // arrayToObject(userData.activityLog)
         })
       }
 
@@ -136,7 +136,11 @@
           inFormatted: moment().format('MMMM Do YYYY, h:mm:ss a'),
           day: moment().format('MMMM Do, YYYY'),
           in: moment().format(),
-          signedIn: true
+          signedIn: true,
+          outFormatted: '',
+          out: '',
+          totalMins: '',
+          totalSecs: ''
         }
         $query.createEvent(newEvent)
         .then(function(savedEvent) {
@@ -150,11 +154,12 @@
 
       }
 
-      function findByIdAndUpdate(visitorLogArray, eventId) {
+      function findById(visitorLogArray, eventId) {
         console.log("visitorLogArray", visitorLogArray)
         var match = _(visitorLogArray).find({_id: eventId})
         console.log("foundObject", match)
-        match.signedIn = false
+        return match
+        // match.signedIn = false
       }
 
       $scope.signOut = function() {
@@ -163,10 +168,27 @@
 
         var eventId = event.target.id
 
-        findByIdAndUpdate($rootScope.userData.activityLog, eventId)
+        var clickedEventObj = findById($rootScope.userData.activityLog, eventId)
 
+        clickedEventObj.signedIn = false
+        clickedEventObj.outFormatted = moment().format('MMMM Do YYYY, h:mm:ss a')
+        clickedEventObj.out = moment().format()
 
+        var timeIn = clickedEventObj.in.toString()
+        var timeOut = clickedEventObj.out.toString()
+        console.log("time in:", timeIn, "timeOut:", timeOut)
 
+        var duration = moment(timeIn).twix(timeOut)
+        var durationMins = duration.count('minutes')
+        var durationSecs = duration.count('seconds')
+        console.log("durationMins", durationMins)
+        console.log("durationSecs", durationSecs)
+
+        clickedEventObj.totalMins = durationMins
+        clickedEventObj.totalSecs = durationSecs
+
+        console.log("clickedEventObj", clickedEventObj)
+        $query.updateEvent(clickedEventObj)
       }
 
 
