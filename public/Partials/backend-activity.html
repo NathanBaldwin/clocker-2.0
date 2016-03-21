@@ -49,10 +49,10 @@
           	</a>
           </li>
           <li class="divider"></li>
-          <li ng-repeat="group in adminObj.groups">
+          <li ng-repeat="group in userData.adminObj.groups">
           	<a ng-click="setSelectedGroup(); openGroup()">
           		<span class="dropdown-spacing">{{group.groupName}}</span>
-          		<span ng-class="isChecked(group.$value)"></span>
+          		<span ng-class="isChecked(group.groupName)"></span>
           	</a>
            </li>
         </ul>
@@ -77,10 +77,10 @@
           	</a>
           </li>
           <li class="divider"></li>
-          <li ng-repeat="activityName in activityNamesArray">
+          <li ng-repeat="activityName in activityNames">
           	<a ng-click="setSelectedActivity(); openGroup()">
-          		<span class="dropdown-spacing">{{activityName.$value}}</span>
-          		<span ng-class="activityIsChecked(activityName.$value)"></span>
+          		<span class="dropdown-spacing">{{activityName.activityName}}</span>
+          		<span ng-class="activityIsChecked(activityName.activityName)"></span>
           	</a>
            </li>
         </ul>
@@ -116,9 +116,9 @@
 						<h1 ng-model="eventsTotal">{{eventsTotal}}</h1>
 					</div>
 				</div>
-	</div>
+      </div>
 
-			</div>
+		  </div>
 			</div>
 
 			<div id="invisible-header" class="navbar navbar-default wide-margin">
@@ -166,7 +166,7 @@
 						</tr>
 					</thead>
 					<tbody id="activity-table-body">
-						<tr ng-repeat-start="activity in filteredResults = (userData.activityLog)">
+						<tr ng-repeat-start="activity in filteredResults = (userData.activityLog | afterDateFilter: selectedStart : startDateText | beforeDateFilter: selectedEnd : beforeDateText | groupFilter: selectedGroups | activityFilter: selectedActivities | filterBy: ['firstName + lastName']: searchName)" ng-if="compareActivities(activity)">
 							
 							<td class="no-side-border" colspan="6">{{activity.day}}</td>
 

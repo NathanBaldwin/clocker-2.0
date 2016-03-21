@@ -27,9 +27,26 @@
         
       })
     }
+
+    //fix table header:
+    $scope.activityHeader = {
+      top: 150,
+      position: 'auto'
+    }
+
+    //prevent default for group and activity dropdowns clicks:
+    $scope.openGroup = function() {
+      event.stopPropagation()
+    }
+
+    //reflow fixed table header when filtered sum changes:
+    $scope.varForReflowWatch = 0
+    $scope.$watch('filteredSum', function() {
+      console.log("watch worked!!")
+      $scope.varForReflowWatch = $scope.varForReflowWatch + 1
+    })
     
     $scope.$watch(function() {
-    
       var sum = 0
 
       //TOTAL HOURS LOGIC:
@@ -50,7 +67,6 @@
 
       //TOTAL GROUPS LOGIC:
       var allGroups = $scope.filteredResults.map(function(activity) {
-        console.log("activity object to map:", activity)
         return activity.group
       })
       var uniqueGroups = _.uniq(allGroups)
@@ -65,8 +81,160 @@
       })
       var uniquePeople = _.uniq(allPeople)
       $scope.peopleTotal = uniquePeople.length
-
     })
+
+    //determine whether next event is next day
+    //used in ng-if to determine whether or not to add a new table header
+    $scope.compareActivities = function(currentActivity) {
+
+      var currentIndex = $scope.filteredResults.indexOf(currentActivity)
+      var prevActivity = $scope.filteredResults[currentIndex - 1]
+
+      if (prevActivity === undefined) {
+        return true
+      }
+      var currentMoment = moment(currentActivity.in)
+      var nextActMoment = moment(prevActivity.in)
+
+      //use moment.JS plugin to compare whether or not days are same:
+      if (currentMoment.isSame(nextActMoment, 'd')) {
+          return false
+        } else {
+          return true
+        }
+    }
+    //***************Date-Picker functionality*********************************
+
+    //start date is empty string by default:
+    $scope.startDateText = "";
+
+    //Convert unformatted moment (ie. Tue Dec 22 2015 00:00:00 GMT-0600 (CST))
+    //to more readable format (ie. 2015-12-22), which is used to display user's selected date:
+    var convertDate = function(oldFormat) {
+      return $.datepicker.formatDate("yy-mm-dd", oldFormat).toString()
+    }
+
+    //'AFTER' DATE PICKER LOGIC
+    $(function() {
+      $("#start-date-picker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "D, M dd, yy",
+        onSelect: function(dateText, selectedDateObj) {
+          var startDate = $("#start-date-picker").datepicker( "getDate" )
+          console.log("startDate", startDate)
+          console.log("converted Date:", convertDate(startDate))
+          var convertedDate = convertDate(startDate)
+          $scope.selectedStart = convertDate(startDate)
+          $scope.startDateText = $scope.selectedStart
+          $scope.$apply()
+          var timeTest = moment(convertedDate).isAfter("2015-12-14T12:17:10-06:00")
+          console.log("before/after test:", timeTest)
+          console.log("dateText", dateText)
+          console.log("selectedDateObj", selectedDateObj)
+        }
+      })
+    })
+
+    //"BEFORE" DATE PICKER LOGIC
+    $(function() {
+      $("#before-date-picker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "D, M dd, yy",
+        onSelect: function(dateText, selectedDateObj) {
+          var beforeDate = $("#before-date-picker").datepicker( "getDate" )
+          console.log("before date:", beforeDate)
+          console.log("converted before Date:", convertDate(beforeDate))
+          var convertedDate = convertDate(beforeDate)
+          $scope.selectedEnd = convertDate(beforeDate)
+          $scope.beforeDateText = $scope.selectedEnd
+          $scope.$apply()
+          var timeTest = moment(convertedDate).isBefore("2015-12-14T12:17:10-06:00")
+
+          console.log("before or after test:", timeTest)
+
+          console.log("dateText", dateText)
+          console.log("selectedDateObj", selectedDateObj)    
+        }
+      })
+    })
+
+    $scope.selectedGroups = []
+
+    $scope.setSelectedGroup = function () {
+      var groupName = this.group.groupName
+      console.log("groupName", groupName)
+      if (_.contains($scope.selectedGroups, groupName)) {
+          $scope.selectedGroups = _.without($scope.selectedGroups, groupName)
+      } else {
+          $scope.selectedGroups.push(groupName)
+      }
+      return false
+    }
+
+    $scope.isChecked = function (groupName) {
+      console.log("groupName", groupName)
+      if (_.contains($scope.selectedGroups, groupName)) {
+        console.log("want to add checkmark!")
+        return 'glyphicon glyphicon-ok'
+      }
+      return false
+    }
+
+    $scope.checkAllGroups = function () {
+      $scope.selectedGroups = _.pluck($scope.groups, 'groupName')
+    }
+
+    $scope.selectedActivities = []
+
+    $scope.setSelectedActivity = function () {
+      var selectedActivity = this.activityName.activityName
+      console.log("selectedActivity", selectedActivity)
+      if (_.contains($scope.selectedActivities, selectedActivity)) {
+          $scope.selectedActivities = _.without($scope.selectedActivities, selectedActivity)
+      } else {
+          $scope.selectedActivities.push(selectedActivity)
+      }
+      return false
+    }
+
+    $scope.checkAllActivities = function () {
+      $scope.selectedActivities = _.pluck($scope.activityNames, 'activityName')
+    }
+
+    $scope.activityIsChecked = function (activityName) {
+      console.log("activityName", activityName)
+      if (_.contains($scope.selectedActivities, activityName)) {
+        console.log("want to add checkmark!")
+        return 'glyphicon glyphicon-ok'
+      }
+      return false
+    }
+
+    //****** Sidebar hide/show functionality: *********
+
+    $scope.hideSidebar = function () {
+      console.log("you clicked hide sidebar!")
+      $scope.varForReflowWatch = $scope.varForReflowWatch + 1
+      $("#activity-log-body").removeClass("padding-for-sidebar")
+      $("#activity-log-body").addClass("padding-for-add-sidebar-button")
+      $("#activity-filter-sidebar").hide()
+      $("#space-for-add-sidebar-button").removeClass("hidden")
+      $("#fixed-header").removeClass("wide-margin")
+      $("#fixed-header").addClass("thin-margin")
+    }
+
+    $scope.showSidebar = function () {
+
+      $scope.varForReflowWatch = $scope.varForReflowWatch + 1
+      $("#activity-log-body").addClass("padding-for-sidebar")
+      $("#activity-log-body").removeClass("padding-for-add-sidebar-button")
+      $("#activity-filter-sidebar").show()
+      $("#space-for-add-sidebar-button").addClass("hidden")
+      $("#fixed-header").addClass("wide-margin")
+      $("#fixed-header").removeClass("thin-margin")
+    }
 
 
   }])
