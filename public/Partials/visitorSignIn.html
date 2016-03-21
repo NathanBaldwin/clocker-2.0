@@ -80,12 +80,12 @@
 						<th>Group</th>
 						<th></th>
 					</tr>
-					<tr ng-repeat="visitor in currentVisitorsArray | filter: visitor.signedIn = true">
+					<tr ng-repeat="visitor in userData.activityLog | filter: visitor.signedIn = true">
 						<td>{{visitor.firstName}} {{visitor.lastName}}</td>
 						<td>{{visitor.inFormatted}}</td>
 						<td>{{visitor.activity}}</td>
 						<td>{{visitor.group}}</td>
-						<td class="center-button"><button class="btn btn-xs important-btn-sm" id="{{visitor.$id}}" ng-click="signOut()">Sign Out</button></td>
+						<td class="center-button"><button class="btn btn-xs important-btn-sm" id="{{visitor._id}}" ng-click="signOut()">Sign Out</button></td>
 						
 					</tr>
 				</table>
@@ -107,7 +107,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-default" >Yes - sign me in!</button>
+            <button type="button" class="btn btn-default" ng-click='createNewEvent()'>Yes - sign me in!</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

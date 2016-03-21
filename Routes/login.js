@@ -8,11 +8,6 @@ const passport = require('passport')
 const loginCtrl = require('../controllers/login.ctrl')
 
 
-
-
-// router.get('/', loginCtrl.index)
-
 router.post('/login', loginCtrl.login)
-
 
 module.exports = router
