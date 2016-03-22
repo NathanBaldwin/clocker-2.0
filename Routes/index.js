@@ -5,6 +5,7 @@ const router = express.Router();
 
 // const login = require('./login')
 const register = require('./register.route')
+const login = require('./login.route')
 const visitors = require('./visitors.route')
 const groups = require('./groups.route')
 const catchAll = require('./default')
@@ -13,8 +14,7 @@ const activities = require('./activities.route')
 const allUserData = require('./allUserData.route')
 const activityLogs = require('./activityLogs.route')
 
-
-//waterfall of routes:
+router.use(login)
 router.use(register)
 router.use(adminObj)
 router.use(visitors)

@@ -8,7 +8,8 @@
       $scope.login = function() {
         var credentials = {
           email: $scope.email,
-          password: $scope.password
+          password: $scope.password,
+          adminLogin: true
         }
 
         $http.post('/login', credentials)

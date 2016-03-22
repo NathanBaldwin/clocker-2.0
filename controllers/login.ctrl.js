@@ -8,6 +8,7 @@ loginService //initializing login service. This is where we configure for passpo
 
 module.exports = {
   login: (req, res, next) => {
+    console.log("GOT INTO LOGIN CONTROL FUNCTION", req.body);
     passport.authenticate('local', (err, user) => {
       if (err) { 
         return next(err); 
