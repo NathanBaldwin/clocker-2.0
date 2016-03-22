@@ -13,6 +13,7 @@ const adminObj = require('./adminObj.route')
 const activities = require('./activities.route')
 const allUserData = require('./allUserData.route')
 const activityLogs = require('./activityLogs.route')
+const mobileUsers = require('./mobileUsers.route')
 
 router.use(login)
 router.use(register)
@@ -22,6 +23,7 @@ router.use(groups)
 router.use(activities)
 router.use(allUserData)
 router.use(activityLogs)
+router.use(mobileUsers)
 
 
 //catchall route redirects to angular app:

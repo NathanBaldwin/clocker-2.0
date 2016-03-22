@@ -17,7 +17,6 @@ module.exports = {
     ActivityLog.findOne({adminId: req.user})
       .populate('adminObj')
       .exec((err, allUserData) => {
-        console.log("allUserData", allUserData)
         res.send(allUserData)
       })
   },

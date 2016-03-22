@@ -36,6 +36,6 @@ node_modules
 public/lib/bower_components
 public/lib/node_modules
 public/lib/.sass-cache
-
+.sass-cache
 
 

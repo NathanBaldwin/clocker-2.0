@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          '../styles/main.css': '../sass/main.scss'
+          './public/styles/main.css': './public/sass/main.scss'
         }
       }
     },
@@ -17,5 +17,5 @@ module.exports = function(grunt) {
   });
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-  grunt.registerTask('default', [ 'sass', 'watch']);
+  grunt.registerTask('default', ['sass', 'watch']);
 };

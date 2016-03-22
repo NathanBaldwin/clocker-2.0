@@ -24,6 +24,9 @@
         },
         updateEvent: function(updatedEventObj) {
           return $httpPUT('/activityLogs', updatedEventObj)
+        },
+        getAllMobileUsers: function() {
+          return $httpGET('/mobileUsers')
         }
       }
     }

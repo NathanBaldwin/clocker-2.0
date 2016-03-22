@@ -34,5 +34,12 @@
   "resolutions": {
     "angular": "~1.4.8",
     "angular-resource": "~1.4.8"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "matchdep": "^1.0.1",
+    "grunt-cli": "^1.0.1"
   }
 }

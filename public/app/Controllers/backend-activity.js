@@ -5,6 +5,12 @@
 
     $scope.filteredResults = []
 
+    $query.getAllMobileUsers()
+      .then(function(mobileUsers) {
+        console.log("mobileUsers:", mobileUsers);
+        $scope.mobileUsers = mobileUsers
+      })
+
     if(!$rootScope.refreshIndicator) {
         getAdminData()
       } else {
@@ -18,7 +24,6 @@
     function getAdminData() {
       $query.getAllUserData()
         .then(function(userData) {
-        console.log("DATA RETURNED FROM PROMISE:", userData)
         $rootScope.userData = userData
         $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
         $scope.groups = $rootScope.userData.adminObj.groups || []
@@ -27,13 +32,11 @@
         
       })
     }
-
     //fix table header:
     $scope.activityHeader = {
       top: 150,
       position: 'auto'
     }
-
     //prevent default for group and activity dropdowns clicks:
     $scope.openGroup = function() {
       event.stopPropagation()
@@ -174,9 +177,7 @@
     }
 
     $scope.isChecked = function (groupName) {
-      console.log("groupName", groupName)
       if (_.contains($scope.selectedGroups, groupName)) {
-        console.log("want to add checkmark!")
         return 'glyphicon glyphicon-ok'
       }
       return false
@@ -190,7 +191,6 @@
 
     $scope.setSelectedActivity = function () {
       var selectedActivity = this.activityName.activityName
-      console.log("selectedActivity", selectedActivity)
       if (_.contains($scope.selectedActivities, selectedActivity)) {
           $scope.selectedActivities = _.without($scope.selectedActivities, selectedActivity)
       } else {
@@ -204,9 +204,7 @@
     }
 
     $scope.activityIsChecked = function (activityName) {
-      console.log("activityName", activityName)
       if (_.contains($scope.selectedActivities, activityName)) {
-        console.log("want to add checkmark!")
         return 'glyphicon glyphicon-ok'
       }
       return false
@@ -215,7 +213,6 @@
     //****** Sidebar hide/show functionality: *********
 
     $scope.hideSidebar = function () {
-      console.log("you clicked hide sidebar!")
       $scope.varForReflowWatch = $scope.varForReflowWatch + 1
       $("#activity-log-body").removeClass("padding-for-sidebar")
       $("#activity-log-body").addClass("padding-for-add-sidebar-button")
