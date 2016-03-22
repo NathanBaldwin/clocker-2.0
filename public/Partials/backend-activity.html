@@ -89,11 +89,16 @@
 	</div>
 
   <div class="row" id='invite-mobile-user'>
-      <div class="col-sm-12">
-        <h5> Invite Mobile User </h5>
-        <input type="text" class="form-control dropdown-select dropdown-select-spacing" placeholder="Search Mobile Users..." ng-model="searchMobileUsers">
-      </div>
+    <div class="col-sm-12">
+      <h5> Invite Mobile User </h5>
+      <input type="text" class="form-control dropdown-select dropdown-select-spacing" placeholder="Search Mobile Users..." ng-model="searchMobileUsers">
     </div>
+    <div class="col-sm-12">
+      <ul>
+        <li ng-repeat='mobileUser in mobileUsers' id='{{mobileUser._id}}'>{{mobileUser.firstName}} {{mobileUser.lastName}}</li>
+      </ul>
+    </div>
+  </div>
 
 </div>
 
