@@ -19,6 +19,9 @@
       }
       //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
 
+      socket.on('remoteSignIn', function(data) {
+        console.log("DATA FROM REMOTE CLIENT", data);
+      })
 
       function getAdminData() {
         $query.getAllUserData()

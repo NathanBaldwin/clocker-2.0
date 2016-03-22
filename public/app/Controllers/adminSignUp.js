@@ -14,7 +14,7 @@
           "verify": $scope.verifyPassword
         }
 
-        $http.post('/register', adminFormData)
+        $http.post('/registerAdmin', adminFormData)
         .success(function(user){       
           $location.path('/login');
         })

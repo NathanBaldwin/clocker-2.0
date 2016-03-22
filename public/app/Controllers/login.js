@@ -1,8 +1,8 @@
 (function() {
 
   /// this module allows the user to log in/register with email and password for the website ///
-  app.controller('login', ["$scope", "$location", "$rootScope", "$http", "query",
-    function($scope, $location, $rootScope, $http, $query) {
+  app.controller('login', ["$scope", "$location", "$rootScope", "$http", "query", "socket",
+    function($scope, $location, $rootScope, $http, $query, socket) {
     	console.log("I see login!!")
 
       $scope.login = function() {
@@ -25,6 +25,7 @@
               .then(function(userData) {
                 console.log("all returned user data:", userData);
                 $rootScope.userData = userData
+                socket.emit('join', {adminId: uid})
               })
             })
           .error(function(error, status) {

@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
-const ws = require('socket.io')(server)
+const io = require('socket.io')(server)
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const session = require('express-session')
@@ -55,7 +55,17 @@ mongoose.connection.on('open', () => {
 })
 
 //WEBSOCKET EVENT HANDLING:
-ws.on('connection', (socket) => {
+io.on('connection', (socket) => {
   console.log("socket connected!", socket.id)
-})
 
+  socket.on('join', (data) => {
+    console.log("data.idInfo", data.adminId.toString());
+    socket.join(data.adminId)
+  })
+
+  socket.on('sendEventToClocker', (data) => {
+    console.log("DATA RECEIVED FROM CLIENT", data)
+    console.log("SEND TO:", data.adminId)
+    io.in(data.adminId).emit('remoteSignIn', {msg: "here's a message from a remote client"})
+  })
+})

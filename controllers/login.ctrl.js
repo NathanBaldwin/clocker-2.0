@@ -25,7 +25,6 @@ module.exports = {
         console.log("req.user", req.user);
         console.log("req.session.passport.user", req.session.passport.user);
         let uid = req.session.passport.user
-  
         return res.send(uid)
       })
     })(req, res, next)
