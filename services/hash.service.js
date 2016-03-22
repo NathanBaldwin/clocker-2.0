@@ -1,4 +1,4 @@
-  'use strict'
+'use strict'
 
 const Admin = require('../models/admin.model')
 const ActivityLog = require('../models/activityLogs.model')
