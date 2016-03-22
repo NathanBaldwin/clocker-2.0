@@ -6,5 +6,6 @@ const registerCtrl = require('../controllers/register.ctrl')
 
 
 router.post('/registerAdmin', registerCtrl.registerAdmin)
+router.post('/registerMobileUser', registerCtrl.registerMobileUser)
 
 module.exports = router

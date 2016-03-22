@@ -9,7 +9,6 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const passport = require('passport')
-// const flash = require('connect-flash')
 
 const bodyParser = require('body-parser')
 const routes = require('./routes')
@@ -20,6 +19,19 @@ const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2'
 
 //MIDDLEWARE:
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    // Request methods to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+    // Request headers to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+    // Set to true to include cookies in the requests sen so we case you use sessions
+    res.setHeader('Access-Control-Allow-Credentials', true)
+    // Pass to next layer of middleware
+    next()
+})
+
 app.use(bodyParser.urlencoded({
   extended:false
 }))
