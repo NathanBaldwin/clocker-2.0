@@ -29,6 +29,7 @@
         $scope.groups = $rootScope.userData.adminObj.groups || []
         $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
         $scope.filteredResults = []
+        
       })
     }
     //fix table header:

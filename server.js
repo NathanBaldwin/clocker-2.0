@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
     // Request headers to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
     // Set to true to include cookies in the requests sen so we case you use sessions
-    res.setHeader('Access-Control-Allow-Credentials', true)
+    // res.setHeader('Access-Control-Allow-Credentials', true)
     // Pass to next layer of middleware
     next()
 })

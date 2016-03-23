@@ -8,6 +8,7 @@ const MobileUserSchema = mongoose.Schema({
   username: String,
   firstName: String,
   lastName: String,
+  fullName: String,
   email: {type: String, unique: true},
   password: String
 })
