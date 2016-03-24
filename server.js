@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
+// const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const session = require('express-session')
@@ -19,15 +20,16 @@ const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2'
 
 //MIDDLEWARE:
+// app.use( cookieParser("secret") );
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
     // Request methods to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
     // Request headers to allow
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-    // Set to true to include cookies in the requests sen so we case you use sessions
-    // res.setHeader('Access-Control-Allow-Credentials', true)
+    // Set to true to include cookies in the requests sen so we can use sessions
+    res.setHeader('Access-Control-Allow-Credentials', true)
     // Pass to next layer of middleware
     next()
 })

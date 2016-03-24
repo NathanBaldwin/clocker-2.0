@@ -238,6 +238,11 @@
     $scope.inviteMobileUser = function(mobileUserId) {
       console.log("you clicked on invite mobileUsers")
       console.log("mobileUserId", mobileUserId)
+      var adminInviteInfo = {
+        adminId: $rootScope.userData.adminId,
+        mobileUserId: mobileUserId
+      }
+      $query.inviteMobileUser(adminInviteInfo)
     }
 
 

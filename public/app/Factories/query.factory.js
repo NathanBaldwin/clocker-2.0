@@ -27,6 +27,9 @@
         },
         getAllMobileUsers: function() {
           return $httpGET('/mobileUsers')
+        },
+        inviteMobileUser: function(adminInviteInfo) {
+          return $httpPOST('/mobileUsers/invite', adminInviteInfo)
         }
       }
     }

@@ -23,11 +23,7 @@ module.exports = {
     console.log("you poasted to adminObj/visitors");
     console.log("req.body", req.body);
     Admin.findById(req.user, (err, adminData) => {
-      if (err) throw err
-      console.log("req.body.visitorEmail", req.body.visitorEmail);
-      console.log("req.body.visitorFirstName", req.body.visitorFirstName);
-      console.log("req.body.visitorLastName", req.body.visitorLastName);
-      
+      if (err) throw err      
       var newVisitor = new Visitor.model({
         visitorEmail: req.body.visitorEmail,
         visitorFirstName: req.body.visitorFirstName,

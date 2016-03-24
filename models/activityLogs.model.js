@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose')
 const event = require('./activityLogs.event.model')
-// const AdminAccounts = require('./admin.model.js')
 
 //create simple schema for Admin document. Email must be unique:
 const activityLogSchema = mongoose.Schema({
