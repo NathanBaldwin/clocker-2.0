@@ -233,6 +233,13 @@
       $("#fixed-header").removeClass("thin-margin")
     }
 
+    // INVITING MOBILE USERS:
+
+    $scope.inviteMobileUser = function(mobileUserId) {
+      console.log("you clicked on invite mobileUsers")
+      console.log("mobileUserId", mobileUserId)
+    }
+
 
   }])
 })()

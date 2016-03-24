@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     },
     watch: {
       sassy: {
-        files: ['../sass/**/*.scss'],
+        files: ['./public/sass/**/*.scss'],
         tasks: ['sass']
       }
     }

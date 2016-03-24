@@ -520,4 +520,7 @@ table#activity-list td.no-side-border {
 #invite-mobile-user {
   margin-top: 20px; }
 
+.pointer {
+  cursor: pointer; }
+
 /*# sourceMappingURL=main.css.map */
