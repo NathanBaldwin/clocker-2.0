@@ -22,6 +22,7 @@ const createActivityObj = function(req, res) {
 }
 
 const createAdminObj = function(req, res) {
+  req.body.adminId = req.user
   Admin.create(req.body, (err) => {
       if (err) throw err
       console.log("NEW USER CREATED")

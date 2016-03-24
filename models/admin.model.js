@@ -9,6 +9,7 @@ const activities = require('./admin.activity.model')
 //create simple schema for Admin document. Email must be unique:
 const AdminSchema = mongoose.Schema({
   orgName: String,
+  adminId: String,
   ownerFirstName: String,
   ownerLastName: String,
   email: {type: String, unique: true},

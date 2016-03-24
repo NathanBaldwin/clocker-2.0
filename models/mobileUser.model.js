@@ -15,6 +15,10 @@ const MobileUserSchema = mongoose.Schema({
   invitations: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'adminaccounts'
+  }],
+  clocks: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'adminaccounts'
   }]
 })
 

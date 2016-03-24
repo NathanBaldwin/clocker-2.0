@@ -7,5 +7,6 @@ const mobileUsersCtrl = require('../controllers/mobileUsers.ctrl')
 router.get('/mobileUsers', mobileUsersCtrl.getAllMobileUsers)
 router.post('/mobileUsers/invite', mobileUsersCtrl.invite)
 router.get('/singleMobileUser', mobileUsersCtrl.getSingleMobileUser)
+router.post('/mobileUser/acceptInvite', mobileUsersCtrl.acceptInvite)
 
 module.exports = router
