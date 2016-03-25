@@ -42,7 +42,7 @@ app.use(bodyParser.json())
 app.use(session({
   secret: "secret key",
   store: new RedisStore,
-  resave: true,
+  resave: false,
   saveUninitialized: false
 }))
 app.use(flash())

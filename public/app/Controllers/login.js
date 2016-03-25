@@ -20,12 +20,12 @@
             //we'll check this variable. If false, we'll make a query to db to refresh data stored
             //on $rootScope
             $rootScope.userData = {}
-            $location.path('/visitorsignin')
 
             $query.getAllUserData()
               .then(function(userData) {
                 console.log("all returned user data:", userData);
                 $rootScope.userData = userData
+                $location.path('/visitorsignin')
                 socket.emit('join', {adminId: uid})
               })
             })
