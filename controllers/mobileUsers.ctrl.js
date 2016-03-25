@@ -54,19 +54,45 @@ module.exports = {
     
   },
   acceptInvite: (req, res) => {
+    MobileUser.findByIdAndUpdate(req.user, 
+      {
+        $pull: {
+          invitations: req.body.inviteId
+        }
+      }, (err, data) => {
+        if (err) throw err
+        console.log("UPDATED DATA:", data)
+        res.send(data)
+      })
 
-    // MobileUser.findById(req.user)
-    // .populate('invitations')
-    // .populate('clocks')
-    // .exec((err, mobileUser) => {
-    //   if (err) throw err
-    //   console.log("GOT MOBILE USER DATA:", mobileUser)
-    //   let clockList = mobileUser.clocks
-    //   console.log("req.body.inviteId", typeof req.body.inviteId);
-    //   console.log("already have this one?:", _.some(clockList, {_id: req.body.inviteId}))
-      
+//     MobileUser.findById(req.user)
+//     .populate('invitations')
+//     .populate('clocks')
+//     .exec((err, mobileUser) => {
+//       if (err) throw err
+//       console.log("GOT MOBILE USER DATA:", mobileUser)
+//       let clockList = mobileUser.clocks
+//       console.log("clockList", clockList)
+//       //add clock to clockList
+//       mobileUser.clocks.push(req.body.inviteId)
 
-    //   res.send('success')
+//       _.remove(mobileUser.invitations, ((invitation) => {
+//         return invitation._id.toString() === req.body.inviteId;
+// }     ))
+
+//       // mobileUser.invitations.id(req.body.inviteId).remove()
+//       mobileUser.save((err, updatedUserData) => {
+//         if (err) throw err
+//         console.log("UPDATED USER DATA", updatedUserData)
+//         res.send(updatedUserData.invitations)
+//       })
+
+
+      //find and delete clock from invitations:
+
+      // console.log("req.body.inviteId", typeof req.body.inviteId);
+      // console.log("already have this one?:", _.some(clockList, {_id: req.body.inviteId}))
+
     // })
 
     // console.log("TRYING TO ACCEPT INVITE", req.user)
@@ -74,15 +100,16 @@ module.exports = {
     //   if (err) throw err
     //   console.log("FOUND MOBILE LOGGED IN MOBILE USER", mobileUser);
     // })
-    MobileUser.findById(req.user, (err, mobileUser) => {
-      if (err) throw err
-      mobileUser.clocks.push(req.body.inviteId)
-      mobileUser.save((err, updatedUserData) => {
-        if (err) throw err
-        console.log("UPDATED USER DATA", updatedUserData)
-        getMobileUser(req, res)
+    
+    // MobileUser.findById(req.user, (err, mobileUser) => {
+    //   if (err) throw err
+    //   mobileUser.clocks.push(req.body.inviteId)
+    //   mobileUser.save((err, updatedUserData) => {
+    //     if (err) throw err
+    //     console.log("UPDATED USER DATA", updatedUserData)
+    //     getMobileUser(req, res)
 
-      })
-    })
+    //   })
+    // })
   }
 }
