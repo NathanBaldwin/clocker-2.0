@@ -15,13 +15,28 @@ module.exports = {
   },
   invite: (req, res) => {
     console.log("TRYING TO INVITE MOBILE USER", req.body)
-    MobileUser.findById(req.body.mobileUserId, (err, mobileUser) => {
-      console.log("MOBILE USER:", mobileUser)
-      console.log(mobileUser.invitations);
-      mobileUser.invitations.push(req.body.adminId)
-      mobileUser.save((err) => {
-        if (err) throw err
-      })
+    MobileUser.findById(req.body.mobileUserId)
+      .populate('invitations')
+      .exec((err, mobileUser) => {
+        // console.log("MOBILE USER:", mobileUser)
+        console.log("req.body.adminId", req.body.adminId.toString());
+        // console.log("mobileUser.invitations", mobileUser.invitations);
+        let pendingInvitations = mobileUser.invitations
+        // console.log("pendingInvitation", pendingInvitations);
+        console.log("req.body.adminId:", req.body.adminId);
+        // console.log("pendingInvitations", pendingInvitations)
+        let idOfInvite = req.body.adminId
+        let inviteExists = _.some(pendingInvitations, {adminId: idOfInvite})
+        if (inviteExists) {
+          console.log("ALREADY EXISTS IN INVITE OR CLOCKS COLLECTION - NOT ADDING");
+          res.send('already exists')
+        } else {
+          mobileUser.invitations.push(req.user)
+          mobileUser.save((err) => {
+            if (err) throw err
+            res.send('success')
+          }) 
+        }    
     })
   },
   getSingleMobileUser: (req, res) => {

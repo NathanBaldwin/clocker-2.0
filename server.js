@@ -17,7 +17,7 @@ const routes = require('./routes')
 //envirnoment variables:
 const PORT = process.env.PORT || 3000
 const MONGODB_PORT = process.env.MONGODB_PORT || 27017
-const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2'
+const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 
 //MIDDLEWARE:
 // app.use( cookieParser("secret") );
@@ -43,8 +43,15 @@ app.use(session({
   secret: "secret key",
   store: new RedisStore,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true
 }))
+
+app.use((req, res, next) => {
+  console.log("REQ.SESSION", req.session)
+  console.log("REQ.user", req.user)
+  next()
+})
+
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())

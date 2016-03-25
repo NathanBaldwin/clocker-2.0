@@ -14,9 +14,12 @@ module.exports = {
       res.send('fail')
     }
     //get user's activity log data suing their uid from req.body
+    console.log("TRYING TO GET ALL USER DATA", req.user);
     ActivityLog.findOne({adminId: req.user})
       .populate('adminObj')
       .exec((err, allUserData) => {
+        if (err) throw err
+        console.log("ALL USER DATA", allUserData);
         res.send(allUserData)
       })
   },

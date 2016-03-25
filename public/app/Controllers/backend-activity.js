@@ -7,7 +7,7 @@
 
     $query.getAllMobileUsers()
       .then(function(mobileUsers) {
-        console.log("mobileUsers:", mobileUsers);
+        // console.log("mobileUsers:", mobileUsers);
         $scope.mobileUsers = mobileUsers
       })
 
