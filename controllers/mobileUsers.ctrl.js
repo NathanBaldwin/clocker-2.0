@@ -4,6 +4,7 @@
 const MobileUser = require('../models/mobileUser.model')
 const getMobileUser = require('../services/getMobileUser.service')
 const _ = require('lodash')
+const mongoose = require('mongoose')
 
 module.exports = {
   getAllMobileUsers: (req, res) => {
@@ -15,22 +16,30 @@ module.exports = {
   },
   invite: (req, res) => {
     console.log("TRYING TO INVITE MOBILE USER", req.body)
+    console.log("REQ.USER", req.user)
     MobileUser.findById(req.body.mobileUserId)
       .populate('invitations')
+      .populate('clocks')
       .exec((err, mobileUser) => {
-        // console.log("MOBILE USER:", mobileUser)
-        console.log("req.body.adminId", req.body.adminId.toString());
-        // console.log("mobileUser.invitations", mobileUser.invitations);
         let pendingInvitations = mobileUser.invitations
-        // console.log("pendingInvitation", pendingInvitations);
+        let clockList = mobileUser.clocks
         console.log("req.body.adminId:", req.body.adminId);
-        // console.log("pendingInvitations", pendingInvitations)
+        // console.log("CLOCK LIST:", clockList);
         let idOfInvite = req.body.adminId
-        let inviteExists = _.some(pendingInvitations, {adminId: idOfInvite})
-        if (inviteExists) {
+        let inviteExists = _.some(pendingInvitations, {_id: mongoose.Types.ObjectId(idOfInvite)})
+        let clockExists = _.some(clockList, {_id: mongoose.Types.ObjectId(idOfInvite)})
+        clockList.forEach((clock) => {
+          console.log("clock.adminId", clock.adminId);
+          console.log("clock._id", clock._id)
+          console.log("idOfInvite", idOfInvite)
+          console.log("equal?", clock._id == idOfInvite)
+        })
+        console.log("CLOCK EXISTS:", clockExists);
+        if (inviteExists || clockExists) {
           console.log("ALREADY EXISTS IN INVITE OR CLOCKS COLLECTION - NOT ADDING");
           res.send('already exists')
         } else {
+          "ADDING INVITATION"
           mobileUser.invitations.push(req.user)
           mobileUser.save((err) => {
             if (err) throw err
@@ -42,16 +51,6 @@ module.exports = {
   getSingleMobileUser: (req, res) => {
     console.log("TRYING TO GET SINGLE MOBILE USER", req.user)
     getMobileUser(req, res)
-    // MobileUser.findById(req.user, (err, mobileUser) => {
-    //   if (err) throw err
-      // console.log("MOBILE USER:", mobileUser)
-      // console.log(mobileUser.invitations);
-      // mobileUser.invitations.push(req.body.adminId)
-      // mobileUser.save((err) => {
-      // })
-
-    // getMobileUser(req, res)
-    
   },
   acceptInvite: (req, res) => {
     MobileUser.findByIdAndUpdate(req.user, 
@@ -59,57 +58,15 @@ module.exports = {
         $pull: {
           invitations: req.body.inviteId
         }
-      }, (err, data) => {
+      }, (err, mobileUser) => {
         if (err) throw err
-        console.log("UPDATED DATA:", data)
-        res.send(data)
+        // console.log("UPDATED DATA:", data)
+        mobileUser.clocks.push(req.body.inviteId)
+        mobileUser.save((err, updatedUserData) => {
+          if (err) throw err
+          console.log("UPDATED USER DATA", updatedUserData)
+          res.send(updatedUserData)
+        })
       })
-
-//     MobileUser.findById(req.user)
-//     .populate('invitations')
-//     .populate('clocks')
-//     .exec((err, mobileUser) => {
-//       if (err) throw err
-//       console.log("GOT MOBILE USER DATA:", mobileUser)
-//       let clockList = mobileUser.clocks
-//       console.log("clockList", clockList)
-//       //add clock to clockList
-//       mobileUser.clocks.push(req.body.inviteId)
-
-//       _.remove(mobileUser.invitations, ((invitation) => {
-//         return invitation._id.toString() === req.body.inviteId;
-// }     ))
-
-//       // mobileUser.invitations.id(req.body.inviteId).remove()
-//       mobileUser.save((err, updatedUserData) => {
-//         if (err) throw err
-//         console.log("UPDATED USER DATA", updatedUserData)
-//         res.send(updatedUserData.invitations)
-//       })
-
-
-      //find and delete clock from invitations:
-
-      // console.log("req.body.inviteId", typeof req.body.inviteId);
-      // console.log("already have this one?:", _.some(clockList, {_id: req.body.inviteId}))
-
-    // })
-
-    // console.log("TRYING TO ACCEPT INVITE", req.user)
-    // MobileUser.findOne({"_id": req.user}, (err, mobileUser) => {
-    //   if (err) throw err
-    //   console.log("FOUND MOBILE LOGGED IN MOBILE USER", mobileUser);
-    // })
-    
-    // MobileUser.findById(req.user, (err, mobileUser) => {
-    //   if (err) throw err
-    //   mobileUser.clocks.push(req.body.inviteId)
-    //   mobileUser.save((err, updatedUserData) => {
-    //     if (err) throw err
-    //     console.log("UPDATED USER DATA", updatedUserData)
-    //     getMobileUser(req, res)
-
-    //   })
-    // })
   }
 }
