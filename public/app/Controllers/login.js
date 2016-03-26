@@ -26,7 +26,10 @@
                 console.log("all returned user data:", userData);
                 $rootScope.userData = userData
                 $location.path('/visitorsignin')
-                socket.emit('join', {adminId: uid})
+                socket.emit('join', {
+                  adminId: userData.adminId,
+                  orgName: userData.adminObj.orgName
+                })
               })
             })
           .error(function(error, status) {

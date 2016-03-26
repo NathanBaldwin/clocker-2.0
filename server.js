@@ -46,12 +46,6 @@ app.use(session({
   saveUninitialized: true
 }))
 
-app.use((req, res, next) => {
-  console.log("REQ.SESSION", req.session)
-  console.log("REQ.user", req.user)
-  next()
-})
-
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
@@ -80,13 +74,18 @@ io.on('connection', (socket) => {
   console.log("socket connected!", socket.id)
 
   socket.on('join', (data) => {
+    console.log("DATA:", data);
+    console.log("type of id:", typeof data.adminId);
     console.log("data.idInfo", data.adminId.toString());
-    socket.join(data.adminId)
+    socket.join(data.adminId, ()=> {
+      console.log(`${data.orgName} JOINED ROOM ${data.adminId}`);
+    })
   })
 
-  socket.on('sendEventToClocker', (data) => {
+  socket.on('createClockerEvent', (data) => {
     console.log("DATA RECEIVED FROM CLIENT", data)
     console.log("SEND TO:", data.adminId)
+    console.log("type of id:", typeof data.adminId);
     io.in(data.adminId).emit('remoteSignIn', {msg: "here's a message from a remote client"})
   })
 })
