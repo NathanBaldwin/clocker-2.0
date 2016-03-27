@@ -55,11 +55,11 @@
   
   //by omitting the first arguent of the $watch method, we can update stats every 
   //time $digest() is called, creating a 'real-time' filter!
+  $scope.filteredResults = []
   $scope.$watch(function() {
     var sum = 0
 
     //TOTAL HOURS LOGIC:
-    $scope.filteredResults = []
     $scope.filteredResults.forEach(function (r) {
       if (r.totalSecs === undefined) {
       } else {
