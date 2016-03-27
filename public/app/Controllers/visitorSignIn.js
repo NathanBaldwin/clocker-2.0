@@ -1,8 +1,8 @@
 (function() {
   'use strict'
 
-  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location", "query", "socket",
-    function($scope, $rootScope, $http, $location, $query, socket) {
+  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location", "query", "socket", "event",
+    function($scope, $rootScope, $http, $location, $query, socket, event) {
     	console.log("I see admin visitor sign in controller!")
 
       //REFRESH CHECK:
@@ -38,17 +38,21 @@
       //event listeners:
       socket.on('createClockerEvent', function(data) {
         console.log("DATA FROM REMOTE CLIENT", data)
-        $scope.firstName = data.firstName
-        $scope.lastName = data.lastName
-        $scope.email = data.email
-        $scope.group = data.group
-        $scope.activity = data.activity
+        var newEvent = event(data.activity, data.firstName, data.lastName, data.email, data.group)
+        $query.createEvent(newEvent)
+        .then(function(savedEvent) {
+          $rootScope.userData.activityLog.push(savedEvent)
+        })
+        // $scope.firstName = data.firstName
+        // $scope.lastName = data.lastName
+        // $scope.email = data.email
+        // $scope.group = data.group
+        // $scope.activity = data.activity
 
-        $scope.createNewEvent()       
+        // $scope.createNewEvent()       
       })
 
       //VISITOR SIGN IN FORM FUNCTIONALITY
-
       function clearFormInputs() {
         $scope.group = ""
         $scope.activity = ""
@@ -139,25 +143,8 @@
         }    
       }
 
-      //
       $scope.createNewEvent = function() {
-        console.log("you clicked 'create new event!")
-        console.log("$scope.match", $scope.match);
-        var newEvent = {
-          activity: $scope.activity,
-          firstName: $scope.firstName,
-          lastName: $scope.lastName,
-          email: $scope.email,
-          group: $scope.group,
-          inFormatted: moment().format('MMMM Do YYYY, h:mm:ss a'),
-          day: moment().format('MMMM Do, YYYY'),
-          in: moment().format(),
-          signedIn: true,
-          outFormatted: '',
-          out: '',
-          totalMins: '',
-          totalSecs: ''
-        }
+        var newEvent = event($scope.activity, $scope.firstName, $scope.lastName, $scope.email, $scope.group)
         $query.createEvent(newEvent)
         .then(function(savedEvent) {
           $rootScope.userData.activityLog.push(savedEvent)
@@ -166,25 +153,13 @@
         })
       }
 
-      function updateEvent(eventId) {
-
-      }
-
       function findById(visitorLogArray, eventId) {
-        console.log("visitorLogArray", visitorLogArray)
         var match = _(visitorLogArray).find({_id: eventId})
-        console.log("foundObject", match)
         return match
-        // match.signedIn = false
       }
 
-      $scope.signOut = function() {
-        console.log("you clicked sign out!")
-        console.log("event.target.id", event.target.id)
-
-        var eventId = event.target.id
-
-        var clickedEventObj = findById($rootScope.userData.activityLog, eventId)
+      $scope.signOut = function(eventTargetId) {
+        var clickedEventObj = findById($rootScope.userData.activityLog, eventTargetId)
 
         clickedEventObj.signedIn = false
         clickedEventObj.outFormatted = moment().format('MMMM Do YYYY, h:mm:ss a')
@@ -192,18 +167,13 @@
 
         var timeIn = clickedEventObj.in.toString()
         var timeOut = clickedEventObj.out.toString()
-        console.log("time in:", timeIn, "timeOut:", timeOut)
-
         var duration = moment(timeIn).twix(timeOut)
         var durationMins = duration.count('minutes')
         var durationSecs = duration.count('seconds')
-        console.log("durationMins", durationMins)
-        console.log("durationSecs", durationSecs)
 
         clickedEventObj.totalMins = durationMins
         clickedEventObj.totalSecs = durationSecs
 
-        console.log("clickedEventObj", clickedEventObj)
         $query.updateEvent(clickedEventObj)
       }
 
