@@ -86,6 +86,7 @@ io.on('connection', (socket) => {
     console.log("DATA RECEIVED FROM CLIENT", data)
     console.log("SEND TO:", data.adminId)
     console.log("type of id:", typeof data.adminId);
-    io.in(data.adminId).emit('remoteSignIn', {msg: "here's a message from a remote client"})
+    socket.broadcast.to(data.adminId).emit('remoteSignIn', {msg: "here's a message from a remote client"})
+    // io.in(data.adminId).emit('remoteSignIn', {msg: "here's a message from a remote client"})
   })
 })

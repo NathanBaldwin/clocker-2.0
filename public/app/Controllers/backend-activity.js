@@ -1,7 +1,13 @@
 (function(){
   'use strict'
-  app.controller('backend-activity',["$scope", "$rootScope", "query",
-    function($scope, $rootScope, $query) {
+  app.controller('backend-activity',["$scope", "$rootScope", "query", "socket",
+    function($scope, $rootScope, $query, socket) {
+
+    $scope.$on('$destroy', function (event) {
+      console.log("FIRED DESTROY! - backend-activity");
+      socket.getSocket().removeAllListeners()
+      socket.removeAllListeners('remoteSignIn');
+    });
 
     $scope.filteredResults = []
 

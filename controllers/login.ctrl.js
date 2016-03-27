@@ -23,8 +23,8 @@ module.exports = {
         if (err) { 
           return next(err); 
         }
-        console.log("req.user", req.user);
-        console.log("req.session.passport.user", req.session.passport.user);
+        // console.log("req.user", req.user);
+        // console.log("req.session.passport.user", req.session.passport.user);
         let uid = req.session.passport.user
         return res.send(uid)
       })

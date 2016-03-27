@@ -14,7 +14,7 @@ const loginAdmin = function(email, password, done) {
       authenticate(password, user.password, (err, result) => { //callback function we're passing to authenticate service
         if (err) throw err
         if (result) {//(if result of hashing === true (valid))
-          console.log("SUCCESS. USER:", user);
+          console.log("AUTH SUCCESS.");
           return done(null, user) //tells passport we are logged in, and attaches user object to request
         } //(if result of hashing === false)...
           else {

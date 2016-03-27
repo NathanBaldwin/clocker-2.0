@@ -19,7 +19,7 @@ module.exports = {
       .populate('adminObj')
       .exec((err, allUserData) => {
         if (err) throw err
-        console.log("ALL USER DATA", allUserData);
+        // console.log("ALL USER DATA", allUserData);
         res.send(allUserData)
       })
   },
@@ -45,7 +45,7 @@ module.exports = {
     ActivityLog.findOneAndUpdate({"adminId": req.user, "activityLog.eventId": targetEventId},
       {"$set": {"activityLog.$": req.body}}, (err, data) => {
         if (err) throw err
-        console.log("DATA RETURNED", data);
+        // console.log("DATA RETURNED", data);
       })
   }
 }

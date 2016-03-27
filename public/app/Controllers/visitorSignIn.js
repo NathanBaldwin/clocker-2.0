@@ -9,19 +9,32 @@
       //if user has refreshed the page, it won't be there so, we'll go to api to get it
       //if user is not logged in, api send 'error' response, which angular will handle with redirect
       //tabling redirect code for now
+
+      // const mySocket = socket.connect()
+
       if(!$rootScope.refreshIndicator) {
         getAdminData()
       } else {
         // get array of visitor objects from adminObj, which stored on rootScope on module.run:
         $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
         $scope.groups = $rootScope.userData.adminObj.groups || []
-        $scope.activityNames = $rootScope.userData.adminObj.activityNames || []  
+        $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
+        // socket.emit('join', {
+        //             adminId: $rootScope.userData.adminId,
+        //             orgName: $rootScope.userData.adminObj.orgName
+        //           })
+        // socket.connect()  
       }
       //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
-
       socket.on('remoteSignIn', function(data) {
         console.log("DATA FROM REMOTE CLIENT", data);
       })
+
+      $scope.$on('$destroy', function (event) {
+        console.log("FIRED DESTROY! - visitor sign in");
+        // socket.getSocket().removeAllListeners()
+        socket.removeAllListeners('remoteSignIn');
+      });
 
       function getAdminData() {
         $query.getAllUserData()
@@ -31,6 +44,12 @@
           $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
           $scope.groups = $rootScope.userData.adminObj.groups || []
           $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
+          socket.emit('join', {
+                    adminId: $rootScope.userData.adminId,
+                    orgName: $rootScope.userData.adminObj.orgName
+                  })
+          $rootScope.refreshIndicator = true
+          // socket.connect()
           // arrayToObject(userData.activityLog)
         })
       }

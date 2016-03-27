@@ -27,9 +27,10 @@
                 $rootScope.userData = userData
                 $location.path('/visitorsignin')
                 socket.emit('join', {
-                  adminId: userData.adminId,
-                  orgName: userData.adminObj.orgName
-                })
+                    adminId: $rootScope.userData.adminId,
+                    orgName: $rootScope.userData.adminObj.orgName
+                  })
+                // socket.connect()
               })
             })
           .error(function(error, status) {
@@ -37,6 +38,12 @@
             $location.path('/login')
             $scope.error_message = error
           })
+
+          $scope.$on('$destroy', function (event) {
+            console.log("FIRED DESTROY - login");
+            socket.getSocket().removeAllListeners()
+            socket.removeAllListeners('remoteSignIn');
+          });
       }
   }])
 })()
