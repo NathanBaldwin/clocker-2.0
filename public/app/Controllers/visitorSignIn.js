@@ -5,36 +5,17 @@
     function($scope, $rootScope, $http, $location, $query, socket) {
     	console.log("I see admin visitor sign in controller!")
 
+      //REFRESH CHECK:
       //when controller loads, check to see if user data is on $rootScope
-      //if user has refreshed the page, it won't be there so, we'll go to api to get it
-      //if user is not logged in, api send 'error' response, which angular will handle with redirect
-      //tabling redirect code for now
-
-      // const mySocket = socket.connect()
-
+      //if user has refreshed the page, it won't be there so, we'll make api request for it.
       if(!$rootScope.refreshIndicator) {
         getAdminData()
       } else {
         // get array of visitor objects from adminObj, which stored on rootScope on module.run:
         $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
         $scope.groups = $rootScope.userData.adminObj.groups || []
-        $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
-        // socket.emit('join', {
-        //             adminId: $rootScope.userData.adminId,
-        //             orgName: $rootScope.userData.adminObj.orgName
-        //           })
-        // socket.connect()  
+        $scope.activityNames = $rootScope.userData.adminObj.activityNames || []  
       }
-      //*****************VISITOR SIGN IN FORM FUNCTIONALITY*************
-      socket.on('remoteSignIn', function(data) {
-        console.log("DATA FROM REMOTE CLIENT", data);
-      })
-
-      $scope.$on('$destroy', function (event) {
-        console.log("FIRED DESTROY! - visitor sign in");
-        // socket.getSocket().removeAllListeners()
-        socket.removeAllListeners('remoteSignIn');
-      });
 
       function getAdminData() {
         $query.getAllUserData()
@@ -44,15 +25,29 @@
           $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
           $scope.groups = $rootScope.userData.adminObj.groups || []
           $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
-          socket.emit('join', {
-                    adminId: $rootScope.userData.adminId,
-                    orgName: $rootScope.userData.adminObj.orgName
-                  })
+          socket.emit(
+            'join', {
+              adminId: $rootScope.userData.adminId,
+              orgName: $rootScope.userData.adminObj.orgName
+            })
           $rootScope.refreshIndicator = true
-          // socket.connect()
-          // arrayToObject(userData.activityLog)
         })
       }
+
+      // WEBSOCKETS
+      //event listeners:
+      socket.on('createClockerEvent', function(data) {
+        console.log("DATA FROM REMOTE CLIENT", data)
+        $scope.firstName = data.firstName
+        $scope.lastName = data.lastName
+        $scope.email = data.email
+        $scope.group = data.group
+        $scope.activity = data.activity
+
+        $scope.createNewEvent()       
+      })
+
+      //VISITOR SIGN IN FORM FUNCTIONALITY
 
       function clearFormInputs() {
         $scope.group = ""
@@ -154,7 +149,6 @@
           lastName: $scope.lastName,
           email: $scope.email,
           group: $scope.group,
-          activity: $scope.activity,
           inFormatted: moment().format('MMMM Do YYYY, h:mm:ss a'),
           day: moment().format('MMMM Do, YYYY'),
           in: moment().format(),

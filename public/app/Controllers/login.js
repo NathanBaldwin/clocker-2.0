@@ -5,6 +5,11 @@
     function($scope, $location, $rootScope, $http, $query, socket) {
     	console.log("I see login!!")
 
+      $scope.$on('$destroy', function (event) {
+        console.log("FIRED DESTROY - login");
+        socket.removeAllListeners()
+      })
+
       $scope.login = function() {
         var credentials = {
           email: $scope.email,
@@ -39,11 +44,7 @@
             $scope.error_message = error
           })
 
-          $scope.$on('$destroy', function (event) {
-            console.log("FIRED DESTROY - login");
-            socket.getSocket().removeAllListeners()
-            socket.removeAllListeners('remoteSignIn');
-          });
+          
       }
   }])
 })()

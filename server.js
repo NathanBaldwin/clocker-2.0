@@ -4,34 +4,31 @@ const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
-// const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const passport = require('passport')
-
 const bodyParser = require('body-parser')
 const routes = require('./routes')
 
-//envirnoment variables:
+//ENVIRONMENT variables:
 const PORT = process.env.PORT || 3000
 const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 
 //MIDDLEWARE:
-// app.use( cookieParser("secret") );
 app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
-    // Request methods to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-    // Request headers to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-    // Set to true to include cookies in the requests sen so we can use sessions
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    // Pass to next layer of middleware
-    next()
+  // IP's we want to allow access:
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
+  // Request methods to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+  // Request headers to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+  // Include cookies in the requests sent
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  // Pass to next layer of middleware
+  next()
 })
 
 app.use(bodyParser.urlencoded({
@@ -77,16 +74,18 @@ io.on('connection', (socket) => {
     console.log("DATA:", data);
     console.log("type of id:", typeof data.adminId);
     console.log("data.idInfo", data.adminId.toString());
-    socket.join(data.adminId, ()=> {
-      console.log(`${data.orgName} JOINED ROOM ${data.adminId}`);
+
+    var room = data.adminId
+    socket.join(room, ()=> {
+      console.log(`${data.orgName} JOINED ROOM ${room}`);
     })
   })
 
-  socket.on('createClockerEvent', (data) => {
-    console.log("DATA RECEIVED FROM CLIENT", data)
-    console.log("SEND TO:", data.adminId)
-    console.log("type of id:", typeof data.adminId);
-    socket.broadcast.to(data.adminId).emit('remoteSignIn', {msg: "here's a message from a remote client"})
-    // io.in(data.adminId).emit('remoteSignIn', {msg: "here's a message from a remote client"})
+  socket.on('createClockerEvent', (eventData) => {
+    console.log("eventData RECEIVED FROM CLIENT", eventData)
+    console.log("SEND TO:", eventData.adminId)
+    console.log("type of id:", typeof eventData.adminId);
+    var room = eventData.adminId
+    socket.broadcast.to(room).emit('createClockerEvent', eventData)
   })
 })
