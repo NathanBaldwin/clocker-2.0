@@ -1,7 +1,7 @@
 (function(){
   'use strict'
-  app.controller('backend-activity',["$scope", "$rootScope", "query", "socket",
-    function($scope, $rootScope, $query, socket) {
+  app.controller('backend-activity',["$scope", "$rootScope", "query", "socket", "findMatch",
+    function($scope, $rootScope, $query, socket, findMatch) {
 
     //Event listeners will be duplicated if we load a controller that contains socket.io
     //event listeners after this one. Thus, we need to remove all listeners before
@@ -229,7 +229,7 @@
     }
 
     // TYPEAHEAD FOR INVITING MOBILE USERS:
-    $scope.inviteMobileUser = function(mobileUserId) {
+    $scope.inviteMobileUser = function(mobileUserId, mobileUserEmail) {
       var adminInviteInfo = {
         adminId: $rootScope.userData.adminId,
         mobileUserId: mobileUserId

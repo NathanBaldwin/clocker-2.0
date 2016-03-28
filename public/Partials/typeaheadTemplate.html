@@ -1,5 +1,5 @@
 <a>
-  <div user='match.model._id' class='pointer' ng-click="$parent.$parent.$parent.inviteMobileUser(match.model._id)">
+  <div user='match.model._id' class='pointer' ng-click="$parent.$parent.$parent.inviteMobileUser(match.model._id, match.model.email)">
     <span user='match.model._id' class="registration" bind-html-unsafe="match.model.fullName | typeaheadHighlight:query"></span>
     <span class='glyphicon glyphicon-ok-circle'></span>
   </div>

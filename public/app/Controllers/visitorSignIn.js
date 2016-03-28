@@ -1,8 +1,8 @@
 (function() {
   'use strict'
 
-  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location", "query", "socket", "event",
-    function($scope, $rootScope, $http, $location, $query, socket, event) {
+  app.controller('visitorSignIn', ["$scope", "$rootScope", "$http", "$location", "query", "socket", "createObj", "findMatch",
+    function($scope, $rootScope, $http, $location, $query, socket, createObj, findMatch) {
     	console.log("I see admin visitor sign in controller!")
 
       //REFRESH CHECK:
@@ -38,18 +38,23 @@
       //event listeners:
       socket.on('createClockerEvent', function(data) {
         console.log("DATA FROM REMOTE CLIENT", data)
-        var newEvent = event(data.activity, data.firstName, data.lastName, data.email, data.group)
+
+        //check to see if mobileUser has signed in before:
+        //if not, add them to visitors array in db and rootScope
+        var match = findMatch($scope.pastVisitors, data.email.toLowerCase())
+        if (match.length < 1) {
+          console.log("creating new visitor");
+          var newVisitor = createObj.newVisitor(data.email, data.firstName, data.lastName)
+          $query.addVisitor(newVisitor)
+          $rootScope.userData.adminObj.visitors.push(newVisitor)
+        } 
+
+        //create new event
+        var newEvent = createObj.event(data.activity, data.firstName, data.lastName, data.email, data.group)
         $query.createEvent(newEvent)
         .then(function(savedEvent) {
           $rootScope.userData.activityLog.push(savedEvent)
-        })
-        // $scope.firstName = data.firstName
-        // $scope.lastName = data.lastName
-        // $scope.email = data.email
-        // $scope.group = data.group
-        // $scope.activity = data.activity
-
-        // $scope.createNewEvent()       
+        })     
       })
 
       //VISITOR SIGN IN FORM FUNCTIONALITY
@@ -64,20 +69,16 @@
       }
 
       //modal submission: create new visitor object to be saved
-      $scope.createNewVisitor = function() {
-        var newVisitor = {
-          "visitorEmail": $scope.email,
-          "visitorFirstName": $scope.firstName,
-          "visitorLastName": $scope.lastName,
-        }
+      $scope.createNewVisitor = function(visitorEmail, visitorFirstName, visitorLastName) {
+
+        console.log(visitorEmail, visitorFirstName, visitorLastName);
+        var newVisitor = createObj.newVisitor(visitorEmail, visitorFirstName, visitorLastName)
+
         //add new visitor object as sub document to adminObj
         $query.addVisitor(newVisitor)
         $rootScope.userData.adminObj.visitors.push(newVisitor)
-
         $scope.createNewEvent()
-
         $("#noMatchModal").modal('hide');
-
         clearFormInputs()
       }
 
@@ -121,19 +122,7 @@
 
       //on click of 'Sign In' button, search through past visitors to see if current visitor is in the db:
       $scope.findVisitor = function() {
-        console.log("pastVisitors data:", $scope.pastVisitors)
-        //use lodash to loop through array of past visitor objects
-        //return the object if emails match
-        $scope.match = _.filter($scope.pastVisitors, function(visitorObj) {
-          //make both emails lowercase to normalize comparison
-          if (_.includes(visitorObj.visitorEmail.toLowerCase(), $scope.email.toLowerCase())) {
-            console.log("obj includes", visitorObj.email)
-            return visitorObj
-          }
-        })
-        //if filter function returned any matches, ask visitor to verify identity
-        //if no match was found, show modal to create new visitor:
-        console.log("matching visitor object(s):", $scope.match)
+        $scope.match = findMatch($scope.pastVisitors, $scope.email.toLowerCase())
         if ($scope.match.length < 1) {
           $("#noMatchModal").modal("show")
         } else {
@@ -144,7 +133,7 @@
       }
 
       $scope.createNewEvent = function() {
-        var newEvent = event($scope.activity, $scope.firstName, $scope.lastName, $scope.email, $scope.group)
+        var newEvent = createObj.event($scope.activity, $scope.firstName, $scope.lastName, $scope.email, $scope.group)
         $query.createEvent(newEvent)
         .then(function(savedEvent) {
           $rootScope.userData.activityLog.push(savedEvent)

@@ -45,6 +45,7 @@ module.exports = {
     ActivityLog.findOneAndUpdate({"adminId": req.user, "activityLog.eventId": targetEventId},
       {"$set": {"activityLog.$": req.body}}, (err, data) => {
         if (err) throw err
+        res.send('success')
         // console.log("DATA RETURNED", data);
       })
   }

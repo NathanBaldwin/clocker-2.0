@@ -23,16 +23,10 @@ module.exports = {
       .exec((err, mobileUser) => {
         let pendingInvitations = mobileUser.invitations
         let clockList = mobileUser.clocks
-        console.log("req.body.adminId:", req.body.adminId);
-        // console.log("CLOCK LIST:", clockList);
         let idOfInvite = req.body.adminId
         let inviteExists = _.some(pendingInvitations, {_id: mongoose.Types.ObjectId(idOfInvite)})
         let clockExists = _.some(clockList, {_id: mongoose.Types.ObjectId(idOfInvite)})
         clockList.forEach((clock) => {
-          console.log("clock.adminId", clock.adminId);
-          console.log("clock._id", clock._id)
-          console.log("idOfInvite", idOfInvite)
-          console.log("equal?", clock._id == idOfInvite)
         })
         console.log("CLOCK EXISTS:", clockExists);
         if (inviteExists || clockExists) {
@@ -68,5 +62,25 @@ module.exports = {
           res.send(updatedUserData)
         })
       })
+  },
+  deleteClock: (req, res) => {
+    console.log("TRYING TO DELETE", req.body)
+    console.log("user:", req.user)
+    MobileUser.findByIdAndUpdate(req.user, 
+      {
+        $pull: {
+          clocks: req.body.clockId
+        }
+      }, (err, mobileUser) => {
+        if (err) throw err
+        // console.log("UPDATED DATA:", data)
+        // mobileUser.clocks.push(req.body.inviteId)
+        mobileUser.save((err, updatedUserData) => {
+          if (err) throw err
+          console.log("UPDATED USER DATA", updatedUserData)
+          res.send(updatedUserData)
+        })
+      })
   }
 }
+
