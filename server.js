@@ -81,6 +81,21 @@ io.on('connection', (socket) => {
     })
   })
 
+  socket.on('mobileUserJoin', (mobileUserId) => {
+    console.log("DATA received by socket:", mobileUserId)
+    var room = mobileUserId
+    socket.join(room, ()=> {
+      console.log(`${mobileUserId} JOINED ROOM ${mobileUserId}`)
+    })
+  })
+
+  socket.on('inviteMobileUser', (adminData) => {
+    // console.log("TRYING TO INVITE MOBILE USER", adminData)
+    var room = adminData.mobileUserId
+    console.log("invite sending to room:", room)
+    socket.broadcast.to(room).emit('adminInvitation', adminData)
+  })
+
   socket.on('createClockerEvent', (eventData) => {
     console.log("eventData RECEIVED FROM CLIENT", eventData)
     console.log("SEND TO:", eventData.adminId)

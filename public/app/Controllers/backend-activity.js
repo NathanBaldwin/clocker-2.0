@@ -235,6 +235,9 @@
         mobileUserId: mobileUserId
       }
       $query.inviteMobileUser(adminInviteInfo)
+      var adminData = $rootScope.userData.adminObj
+      adminData.mobileUserId = mobileUserId
+      socket.emit('inviteMobileUser', adminData)
     }
 
   }])

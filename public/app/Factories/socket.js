@@ -11,7 +11,7 @@
         socket.on(eventName, function () {
           var args = arguments
           $rootScope.$apply(function () {
-              callback.apply(socket, args)
+            callback.apply(socket, args)
           })
         })
       },
@@ -20,7 +20,7 @@
           var args = arguments
           $rootScope.$apply(function () {
             if (callback) {
-                callback.apply(socket, args)
+              callback.apply(socket, args)
             }
           })
         })
@@ -32,9 +32,7 @@
       getSocket: function() {
         return socket
       }
-    }
-    
-
+    } 
   }])
 })()
 

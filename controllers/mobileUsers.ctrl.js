@@ -54,7 +54,6 @@ module.exports = {
         }
       }, (err, mobileUser) => {
         if (err) throw err
-        // console.log("UPDATED DATA:", data)
         mobileUser.clocks.push(req.body.inviteId)
         mobileUser.save((err, updatedUserData) => {
           if (err) throw err
@@ -73,8 +72,6 @@ module.exports = {
         }
       }, (err, mobileUser) => {
         if (err) throw err
-        // console.log("UPDATED DATA:", data)
-        // mobileUser.clocks.push(req.body.inviteId)
         mobileUser.save((err, updatedUserData) => {
           if (err) throw err
           console.log("UPDATED USER DATA", updatedUserData)
