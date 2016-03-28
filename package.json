@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "serve": "nodemon server.js",
-    "postinstall": "bower install"
+    "serve": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -30,7 +29,9 @@
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
     "lodash": "^4.6.1",
-    "mongoose": "^4.4.7",
+    "mongodb": "^2.1.11",
+    "mongoose": "^4.4.10",
+    "nodemon": "^1.9.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "socket.io": "^1.4.5"

@@ -10,10 +10,10 @@ const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const passport = require('passport')
 const bodyParser = require('body-parser')
-const routes = require('./routes')
+const routes = require('./Routes')
 
 //ENVIRONMENT variables:
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 1025
 const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 
@@ -95,7 +95,7 @@ io.on('connection', (socket) => {
     console.log("invite sending to room:", room)
     socket.broadcast.to(room).emit('adminInvitation', adminData)
   })
-
+  
   socket.on('createClockerEvent', (eventData) => {
     console.log("eventData RECEIVED FROM CLIENT", eventData)
     console.log("SEND TO:", eventData.adminId)
