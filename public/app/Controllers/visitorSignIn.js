@@ -100,6 +100,9 @@
         }
         $rootScope.userData.adminObj.groups.push(newGroup)
         $query.addGroup(newGroup)
+          .then(function() {
+            socket.emit('updateMobileUser')
+          })
         $scope.group = $scope.newGroupName
         $("#createNewGroupModal").modal('hide')
       }
@@ -116,6 +119,9 @@
         $rootScope.userData.adminObj.activityNames.push(newActivity)
         $("#enterNewActivityModal").modal('hide')
         $query.addActivity(newActivity)
+          .then(function() {
+            socket.emit('updateMobileUser')
+          })
       }
 
       $scope.setSelectedActivity = function () {

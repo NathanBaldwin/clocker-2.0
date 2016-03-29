@@ -110,4 +110,11 @@ io.on('connection', (socket) => {
     var room = idObj.adminId
     socket.broadcast.to(room).emit('signOutMobileUser', idObj)
   })
+
+  socket.on('updateMobileUser', () => {
+    console.log("SOMEONE ADDED A GROUP OR ACTIVITY")
+    socket.broadcast.emit('updateDropdowns')
+  })
 })
+
+
