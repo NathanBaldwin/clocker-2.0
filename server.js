@@ -20,7 +20,7 @@ const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 //MIDDLEWARE:
 app.use(function (req, res, next) {
   // IP's we want to allow access:
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100')
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8101')
   // 'http://127.0.0.1:8080'
   // Request methods to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
@@ -31,7 +31,6 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next()
 })
-
 app.use(bodyParser.urlencoded({
   extended:false
 }))
@@ -116,5 +115,4 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('updateDropdowns')
   })
 })
-
 
