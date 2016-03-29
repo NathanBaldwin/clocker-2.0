@@ -165,6 +165,5 @@
         $query.updateEvent(updatedEventObj)
       }
 
-
   }])
 })()
