@@ -11,7 +11,7 @@
       if(!$rootScope.refreshIndicator) {
         getAdminData()
       } else {
-        // get array of visitor objects from adminObj, which stored on rootScope on module.run:
+        // get array of visitor objects from adminObj, stored on rootScope:
         $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
         $scope.groups = $rootScope.userData.adminObj.groups || []
         $scope.activityNames = $rootScope.userData.adminObj.activityNames || []  
@@ -50,11 +50,17 @@
         } 
 
         //create new event
-        var newEvent = createObj.event(data.activity, data.firstName, data.lastName, data.email, data.group)
+        var newEvent = createObj.event(data.activity, data.firstName, data.lastName, data.email, data.group, data.mobileUserId)
         $query.createEvent(newEvent)
         .then(function(savedEvent) {
           $rootScope.userData.activityLog.push(savedEvent)
         })     
+      })
+
+      socket.on('signOutMobileUser', function(idObj) {
+        console.log("MOBILE USER WANTS TO SIGN OUT. ID'S:", idObj)
+        var mobileUserId = idObj.mobileUserId
+        $scope.signOut("mobileUserId", mobileUserId)
       })
 
       //VISITOR SIGN IN FORM FUNCTIONALITY
@@ -94,6 +100,9 @@
         }
         $rootScope.userData.adminObj.groups.push(newGroup)
         $query.addGroup(newGroup)
+          .then(function() {
+            socket.emit('updateMobileUser')
+          })
         $scope.group = $scope.newGroupName
         $("#createNewGroupModal").modal('hide')
       }
@@ -110,6 +119,9 @@
         $rootScope.userData.adminObj.activityNames.push(newActivity)
         $("#enterNewActivityModal").modal('hide')
         $query.addActivity(newActivity)
+          .then(function() {
+            socket.emit('updateMobileUser')
+          })
       }
 
       $scope.setSelectedActivity = function () {
@@ -142,28 +154,15 @@
         })
       }
 
-      function findById(visitorLogArray, eventId) {
-        var match = _(visitorLogArray).find({_id: eventId})
+      function findById(arrayOfObjects, key, valueToMatch) {
+        var match = _(arrayOfObjects).find({[key]: valueToMatch, 'signedIn': true})
         return match
       }
 
-      $scope.signOut = function(eventTargetId) {
-        var clickedEventObj = findById($rootScope.userData.activityLog, eventTargetId)
-
-        clickedEventObj.signedIn = false
-        clickedEventObj.outFormatted = moment().format('MMMM Do YYYY, h:mm:ss a')
-        clickedEventObj.out = moment().format()
-
-        var timeIn = clickedEventObj.in.toString()
-        var timeOut = clickedEventObj.out.toString()
-        var duration = moment(timeIn).twix(timeOut)
-        var durationMins = duration.count('minutes')
-        var durationSecs = duration.count('seconds')
-
-        clickedEventObj.totalMins = durationMins
-        clickedEventObj.totalSecs = durationSecs
-
-        $query.updateEvent(clickedEventObj)
+      $scope.signOut = function(targetParam, eventTargetId) {
+        var targetEvent = findById($rootScope.userData.activityLog, targetParam, eventTargetId)
+        var updatedEventObj = createObj.updateEventObj(targetEvent)
+        $query.updateEvent(updatedEventObj)
       }
 
 

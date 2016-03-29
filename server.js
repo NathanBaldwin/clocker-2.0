@@ -13,14 +13,15 @@ const bodyParser = require('body-parser')
 const routes = require('./Routes')
 
 //ENVIRONMENT variables:
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 1025
 const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 
 //MIDDLEWARE:
 app.use(function (req, res, next) {
   // IP's we want to allow access:
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8101')
+  // 'http://127.0.0.1:8080'
   // Request methods to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   // Request headers to allow
@@ -30,7 +31,6 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next()
 })
-
 app.use(bodyParser.urlencoded({
   extended:false
 }))
@@ -103,4 +103,16 @@ io.on('connection', (socket) => {
     var room = eventData.adminId
     socket.broadcast.to(room).emit('createClockerEvent', eventData)
   })
+
+  socket.on('signOutMobileUser', (idObj) => {
+    console.log("TRYING TO SIGN OUT", idObj)
+    var room = idObj.adminId
+    socket.broadcast.to(room).emit('signOutMobileUser', idObj)
+  })
+
+  socket.on('updateMobileUser', () => {
+    console.log("SOMEONE ADDED A GROUP OR ACTIVITY")
+    socket.broadcast.emit('updateDropdowns')
+  })
 })
+

@@ -12,6 +12,7 @@ const eventSchema = mongoose.Schema({
   email: String,
   group: String,
   activity: String,
+  mobileUserId: String,
   inFormatted: String,
   day: String,
   in: Date,
