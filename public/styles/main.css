@@ -350,6 +350,11 @@ input:-ms-input-placeholder {
   cursor: pointer;
   margin-top: 10px; }
 
+#inviteTitle {
+  margin-top: 35px;
+  font-weight: 900;
+  font-size: 118%; }
+
 #activity-log-body {
   background-color: #5B8623; }
 
