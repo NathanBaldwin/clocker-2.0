@@ -11,6 +11,7 @@
       socket.removeAllListeners()
     })
 
+    // $scope.activityLog = $rootScope.userData.activityLog.reverse()
 
     function getAdminData() {
       $query.getAllUserData()
@@ -20,7 +21,8 @@
         $scope.groups = $rootScope.userData.adminObj.groups || []
         $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
         $scope.filteredResults = []
-        $scope.activityLog =$rootScope.userData.activityLog.reverse()
+        $scope.activityLog = Array.prototype.slice.call($rootScope.userData.activityLog)
+        $scope.activityLog = $scope.activityLog.reverse()
       })
     }
     
@@ -33,9 +35,9 @@
         $scope.groups = $rootScope.userData.adminObj.groups || []
         $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
         $scope.filteredResults = []
-	console.log('DID NOT REFRESH')
-        $scope.activityLog =$rootScope.userData.activityLog.reverse()
-	console.log('$scope.activityLog', $scope.activityLog)
+        console.log("DIDN'T REFRESH. rootScope.userData.ACTIVITYLOG:", $rootScope.userData.activityLog)
+        $scope.activityLog = Array.prototype.slice.call($rootScope.userData.activityLog)
+        $scope.activityLog = $scope.activityLog.reverse()
       }
     
     $query.getAllMobileUsers()
@@ -64,6 +66,8 @@
   //time $digest() is called, creating a 'real-time' filter!
   $scope.filteredResults = []
   $scope.$watch(function() {
+
+
     var sum = 0
 
     //TOTAL HOURS LOGIC:
