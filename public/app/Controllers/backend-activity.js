@@ -33,7 +33,9 @@
         $scope.groups = $rootScope.userData.adminObj.groups || []
         $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
         $scope.filteredResults = []
+	console.log('DID NOT REFRESH')
         $scope.activityLog =$rootScope.userData.activityLog.reverse()
+	console.log('$scope.activityLog', $scope.activityLog)
       }
     
     $query.getAllMobileUsers()
