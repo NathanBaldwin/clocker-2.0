@@ -10,7 +10,7 @@ const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const passport = require('passport')
 const bodyParser = require('body-parser')
-const routes = require('./routes')
+const routes = require('./Routes')
 
 //ENVIRONMENT variables:
 const PORT = process.env.PORT || 3000
