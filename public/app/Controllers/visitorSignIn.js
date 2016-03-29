@@ -50,11 +50,17 @@
         } 
 
         //create new event
-        var newEvent = createObj.event(data.activity, data.firstName, data.lastName, data.email, data.group)
+        var newEvent = createObj.event(data.activity, data.firstName, data.lastName, data.email, data.group, data.mobileUserId)
         $query.createEvent(newEvent)
         .then(function(savedEvent) {
           $rootScope.userData.activityLog.push(savedEvent)
         })     
+      })
+
+      socket.on('signOutMobileUser', function(idObj) {
+        console.log("MOBILE USER WANTS TO SIGN OUT. ID'S:", idObj)
+        var mobileUserId = idObj.mobileUserId
+        $scope.signOut("mobileUserId", mobileUserId)
       })
 
       //VISITOR SIGN IN FORM FUNCTIONALITY
@@ -142,28 +148,16 @@
         })
       }
 
-      function findById(visitorLogArray, eventId) {
-        var match = _(visitorLogArray).find({_id: eventId})
+      function findById(arrayOfObjects, key, valueToMatch) {
+        var match = _(arrayOfObjects).find({[key]: valueToMatch, 'signedIn': true})
         return match
       }
 
-      $scope.signOut = function(eventTargetId) {
-        var clickedEventObj = findById($rootScope.userData.activityLog, eventTargetId)
-
-        clickedEventObj.signedIn = false
-        clickedEventObj.outFormatted = moment().format('MMMM Do YYYY, h:mm:ss a')
-        clickedEventObj.out = moment().format()
-
-        var timeIn = clickedEventObj.in.toString()
-        var timeOut = clickedEventObj.out.toString()
-        var duration = moment(timeIn).twix(timeOut)
-        var durationMins = duration.count('minutes')
-        var durationSecs = duration.count('seconds')
-
-        clickedEventObj.totalMins = durationMins
-        clickedEventObj.totalSecs = durationSecs
-
-        $query.updateEvent(clickedEventObj)
+      $scope.signOut = function(targetParam, eventTargetId) {
+        var targetEvent = findById($rootScope.userData.activityLog, targetParam, eventTargetId)
+        var updatedEventObj = createObj.updateEventObj(targetEvent)
+        console.log("updatedEventObj before save:", updatedEventObj)
+        $query.updateEvent(updatedEventObj)
       }
 
 

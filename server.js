@@ -20,7 +20,8 @@ const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 //MIDDLEWARE:
 app.use(function (req, res, next) {
   // IP's we want to allow access:
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100')
+  // 'http://127.0.0.1:8080'
   // Request methods to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   // Request headers to allow
@@ -95,12 +96,18 @@ io.on('connection', (socket) => {
     console.log("invite sending to room:", room)
     socket.broadcast.to(room).emit('adminInvitation', adminData)
   })
-  
+
   socket.on('createClockerEvent', (eventData) => {
     console.log("eventData RECEIVED FROM CLIENT", eventData)
     console.log("SEND TO:", eventData.adminId)
     console.log("type of id:", typeof eventData.adminId);
     var room = eventData.adminId
     socket.broadcast.to(room).emit('createClockerEvent', eventData)
+  })
+
+  socket.on('signOutMobileUser', (idObj) => {
+    console.log("TRYING TO SIGN OUT", idObj)
+    var room = idObj.adminId
+    socket.broadcast.to(room).emit('signOutMobileUser', idObj)
   })
 })
