@@ -11,7 +11,7 @@
       if(!$rootScope.refreshIndicator) {
         getAdminData()
       } else {
-        // get array of visitor objects from adminObj, which stored on rootScope on module.run:
+        // get array of visitor objects from adminObj, stored on rootScope:
         $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
         $scope.groups = $rootScope.userData.adminObj.groups || []
         $scope.activityNames = $rootScope.userData.adminObj.activityNames || []  
@@ -156,7 +156,6 @@
       $scope.signOut = function(targetParam, eventTargetId) {
         var targetEvent = findById($rootScope.userData.activityLog, targetParam, eventTargetId)
         var updatedEventObj = createObj.updateEventObj(targetEvent)
-        console.log("updatedEventObj before save:", updatedEventObj)
         $query.updateEvent(updatedEventObj)
       }
 
