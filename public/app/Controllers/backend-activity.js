@@ -11,21 +11,7 @@
       socket.removeAllListeners()
     })
 
-    $query.getAllMobileUsers()
-      .then(function(mobileUsers) {
-        $scope.mobileUsers = mobileUsers
-      })
 
-    if(!$rootScope.refreshIndicator) {
-        getAdminData()
-      } else {
-        // get array of visitor objects from adminObj, which stored on rootScope on module.run:
-        $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
-        $scope.groups = $rootScope.userData.adminObj.groups || []
-        $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
-        $scope.filteredResults = [] 
-      }
-      
     function getAdminData() {
       $query.getAllUserData()
         .then(function(userData) {
@@ -33,9 +19,28 @@
         $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
         $scope.groups = $rootScope.userData.adminObj.groups || []
         $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
-        $scope.filteredResults = [] 
+        $scope.filteredResults = []
+        $scope.activityLog =$rootScope.userData.activityLog.reverse()
       })
     }
+    
+    //check if window has been refreshed:
+    if(!$rootScope.refreshIndicator) {
+        getAdminData()
+      } else {
+        // get array of visitor objects from adminObj, which stored on rootScope on module.run:
+        $scope.pastVisitors = $rootScope.userData.adminObj.visitors || []
+        $scope.groups = $rootScope.userData.adminObj.groups || []
+        $scope.activityNames = $rootScope.userData.adminObj.activityNames || []
+        $scope.filteredResults = []
+        $scope.activityLog =$rootScope.userData.activityLog.reverse()
+      }
+    
+    $query.getAllMobileUsers()
+      .then(function(mobileUsers) {
+        $scope.mobileUsers = mobileUsers
+      })
+      
     //fix table header:
     $scope.activityHeader = {
       top: 150,

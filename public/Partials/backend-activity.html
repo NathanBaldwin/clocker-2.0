@@ -175,7 +175,7 @@
 						</tr>
 					</thead>
 					<tbody id="activity-table-body">
-						<tr ng-repeat-start="activity in filteredResults = (userData.activityLog | afterDateFilter: selectedStart : startDateText | beforeDateFilter: selectedEnd : beforeDateText | groupFilter: selectedGroups | activityFilter: selectedActivities | filterBy: ['firstName + lastName']: searchName)" ng-if="compareActivities(activity)">			
+						<tr ng-repeat-start="activity in filteredResults = (activityLog | afterDateFilter: selectedStart : startDateText | beforeDateFilter: selectedEnd : beforeDateText | groupFilter: selectedGroups | activityFilter: selectedActivities | filterBy: ['firstName + lastName']: searchName)" ng-if="compareActivities(activity)">			
 							<td class="no-side-border" colspan="6">{{activity.day}}</td>
 						</tr>
 						<tr ng-repeat-end="" >
