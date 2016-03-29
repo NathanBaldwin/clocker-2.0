@@ -125,11 +125,12 @@
 						<h1 ng-model="eventsTotal">{{eventsTotal}}</h1>
 					</div>
 				</div>
+
       </div>
 
 		  </div>
 			</div>
-
+      <!-- INVISIBLE HEADER ACTING AS SPACER -->
 			<div id="invisible-header" class="navbar navbar-default wide-margin">
 				<div class="container-fluid">
 				<div class="row">
@@ -161,7 +162,6 @@
 			<div class="row no-right-margin">
 
 
-
 			<div class="col-sm-12">
 				<table float-thead="activityHeader" ng-model="varForReflowWatch" id="activity-list" class="table table-striped table-hover table-responsive activity-table">
 					<thead id="fixed-activity-log-header"class="activity-log-header">
@@ -175,17 +175,13 @@
 						</tr>
 					</thead>
 					<tbody id="activity-table-body">
-						<tr ng-repeat-start="activity in filteredResults = (userData.activityLog | afterDateFilter: selectedStart : startDateText | beforeDateFilter: selectedEnd : beforeDateText | groupFilter: selectedGroups | activityFilter: selectedActivities | filterBy: ['firstName + lastName']: searchName)" ng-if="compareActivities(activity)">
-							
+						<tr ng-repeat-start="activity in filteredResults = (userData.activityLog | afterDateFilter: selectedStart : startDateText | beforeDateFilter: selectedEnd : beforeDateText | groupFilter: selectedGroups | activityFilter: selectedActivities | filterBy: ['firstName + lastName']: searchName)" ng-if="compareActivities(activity)">			
 							<td class="no-side-border" colspan="6">{{activity.day}}</td>
-
 						</tr>
 						<tr ng-repeat-end="" >
 							<td>{{activity.firstName}} {{activity.lastName}}</td>
-							<td in time-in="{{activity.in}}"></td>
-							
-							<td out time-out="{{activity.out}}"></td>
-							
+							<td in time-in="{{activity.in}}"></td>		
+							<td out time-out="{{activity.out}}"></td>	
 							<td>{{activity.activity}}</td>
 							<td>{{activity.group}}</td>	
 							<td total-time time-in="{{activity.in}}" time-out="{{activity.out}}"></td>	
