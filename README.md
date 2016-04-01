@@ -5,7 +5,7 @@ Clocker is the tool I wish existed during my time in the nonprofit world. This t
 
 ##Technologies Used:
 
-JavaScript
+* JavaScript
 * HTML5
 * CSS3
 * AngularJS
