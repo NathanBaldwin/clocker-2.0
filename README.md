@@ -32,3 +32,5 @@ You can filter by name, date range, group, and/or activity to segment the data a
 On the 'backend' view, if an individual has registered for a mobile account, you will be able to search their name in the 'Invite Mobile User' dropdown search.
 
 Click on their name to send them an invite. Once they accept, they will be able to sign in to your organization remotely via their iPhone.
+
+

@@ -1,24 +1,31 @@
-<h1>Admin sign up page</h1>
 
-	<div>
-		<input type='text' placeholder="Organization Name" value=orgName size="40" name='orgName' autofocus required ng-model="orgName">
-	</div>
-	<div>
-		<input type='text'placeholder="First Name" value=firstName size="40" name='ownerFirstName' autofocus required ng-model="firstName">
-	</div>
-	<div>
-		<input type='text' placeholder="Last Name" value=lastName size="40"name='ownerLastName' autofocus ng-model="lastName">
-	</div>
-	<div>
-		<input type='email' placeholder='email' value=email name='email' autofocus ng-model="email">
-	</div>
-	<div>
-		<input type='password' placeholder='Password' name='password' autofocus ng-model="password">
-	</div>
-	<div>
-		<input type='password' placeholder='Verify Password' name='verify' autofocus ng-model="verifyPassword">
-	</div>
-	<div>
-		<button ng-click="createNewUser()">Go!</button>
+<div class='wrapper'>
+	<div class='login-container'>
+
+			<h1 class='heading'>Register</h1>
+			<form class="form">
+				<div>
+					<input type='text' placeholder="Organization Name" value=orgName size="40" name='orgName' autofocus required ng-model="orgName">
+				</div>
+				<div>
+					<input type='text'placeholder="First Name" value=firstName size="40" name='ownerFirstName' autofocus required ng-model="firstName">
+				</div>
+				<div>
+					<input type='text' placeholder="Last Name" value=lastName size="40"name='ownerLastName' autofocus ng-model="lastName">
+				</div>
+				<div>
+					<input type='email' placeholder='email' value=email name='email' autofocus ng-model="email">
+				</div>
+				<div>
+					<input type='password' placeholder='Password' name='password' autofocus ng-model="password">
+				</div>
+				<div>
+					<input type='password' placeholder='Verify Password' name='verify' autofocus ng-model="verifyPassword">
+				</div>
+				<div>
+					<button ng-click="createNewUser()">Go!</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

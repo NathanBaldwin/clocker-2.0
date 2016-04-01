@@ -39,6 +39,7 @@ module.exports = {
       })
     })
   },
+
   updateEvent: (req, res) => {
     let targetEventId = req.body._id
 
