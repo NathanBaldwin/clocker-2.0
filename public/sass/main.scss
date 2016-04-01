@@ -158,12 +158,11 @@ input.dropdown-select {
   background: -webkit-linear-gradient(top left, $background-green 0%, $background-green 100%);
   background: linear-gradient(to bottom right, $background-green 0%, $background-green 100%);
   position: absolute;
-  top: 38%;
   left: 0;
   width: 100%;
   min-height: 610px;
   height: 75vh;
-  margin-top: -19.5%;
+  margin-top: 10vh;
   overflow: hidden;
 }
 .wrapper.form-success .container h1 {
