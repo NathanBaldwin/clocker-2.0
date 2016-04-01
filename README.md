@@ -1,7 +1,26 @@
 # clocker-2.0
-This project is a complete rewrite of Clocker, using MongoDB, Node.js, Express, Bcrypt, Passport, Redis, WebSockets, and it includes the additional feature of inviting those who have signed up for a mobile account to 'join' your organization and sign in remotely via their iPhone.
+This project is a complete rewrite of Clocker using the full, MEAN stack and cookie-based authentication. It also includes compatibility the clocker-mobile app.
 
 Clocker is the tool I wish existed during my time in the nonprofit world. This time-keeping app is designed primarily as a tool to help nonprofits track and analyze volunteerism. Use it to track volunteerism for multiple grant initiatives, client participation in various programs, or employee hours spent on different tasks. Get rid of those trusty time sheets and sign-in clipboards!
+
+##Technologies Used:
+
+JavaScript
+HTML5
+CSS3
+AngularJS
+Bootstrap
+MongoDB and Mongoose
+Node.js
+Express
+Passport (cookie-based authentication)
+Redis (for storing session data)
+Deployed via DigitalOcean, using NGINX as a proxy server.
+Bcrypt
+WebSockets
+Lodash
+Sass
+
 
 ##How It Works:
 
