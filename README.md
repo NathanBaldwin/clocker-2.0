@@ -6,20 +6,20 @@ Clocker is the tool I wish existed during my time in the nonprofit world. This t
 ##Technologies Used:
 
 JavaScript
-HTML5
-CSS3
-AngularJS
-Bootstrap
-MongoDB and Mongoose
-Node.js
-Express
-Passport (cookie-based authentication)
-Redis (for storing session data)
-Deployed via DigitalOcean, using NGINX as a proxy server.
-Bcrypt
-WebSockets
-Lodash
-Sass
+*HTML5
+*CSS3
+*AngularJS
+*Bootstrap
+*MongoDB and Mongoose
+*Node.js
+*Express
+*Passport (cookie-based authentication)
+*Redis (for storing session data)
+*Deployed via DigitalOcean, using NGINX as a proxy server.
+*Bcrypt
+*WebSockets
+*Lodash
+*Sass
 
 
 ##How It Works:
