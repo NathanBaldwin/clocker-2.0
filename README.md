@@ -1,7 +1,7 @@
 # clocker-2.0
-This project is a complete rewrite of Clocker, using MongoDB, Node.js, Express, Bcrypt, Passport, and Redis. Includes many additional features.
+This project is a complete rewrite of Clocker, using MongoDB, Node.js, Express, Bcrypt, Passport, Redis, WebSockets, and it includes the additional feature of inviting those who have signed up for a mobile account to 'join' your organization and sign in remotely via their iPhone.
 
-Clocker is the tool I wish existed during my time in the nonprofit world. This time-keeping app enables organizations to track and analyze project-related human resource allocation. Use it to track volunteerism for multiple grant initiatives, client participation in various programs, or employee hours spent on different tasks. Get rid of those trusty time sheets and sign-in clipboards!
+Clocker is the tool I wish existed during my time in the nonprofit world. This time-keeping app is designed primarily as a tool to help nonprofits track and analyze volunteerism. Use it to track volunteerism for multiple grant initiatives, client participation in various programs, or employee hours spent on different tasks. Get rid of those trusty time sheets and sign-in clipboards!
 
 ##How It Works:
 
@@ -27,14 +27,8 @@ Use the filter bar on the left to filter the data and see the statistics update 
 
 You can filter by name, date range, group, and/or activity to segment the data according to you needs.
 
-<!-- ##Goals:
+###Invite mobile users
 
-Currently in progress as my final capstone for NSS, my goals are as follows:
+On the 'backend' view, if an individual has registered for a mobile account, you will be able to search their name in the 'Invite Mobile User' dropdown search.
 
-1. Create a full, MEAN stack app.
-2. Create an authentication strategy using Node.js, Express, Bcrypt, Passport and Redis.
-3. Create an API using MongoDB and Mongoose.
-4. Better understand and employ MVC structure.
-5. Deployment on Digital Ocean using NGINX as a proxy server.
-6. Refactor Angular code now that I have a better understanding of how Angular can be used.
-5. Create a mobile component using Ionic and WebSockets to enable remote, location-based sign-ins. -->
+Click on their name to send them an invite. Once they accept, they will be able to sign in to your organization remotely via their iPhone.
