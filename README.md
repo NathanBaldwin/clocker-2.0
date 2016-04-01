@@ -1,4 +1,4 @@
-# clocker-2.0
+# Clocker-2.0
 This project is a complete rewrite of Clocker using the full, MEAN stack and cookie-based authentication. It also includes compatibility the clocker-mobile app.
 
 Clocker is the tool I wish existed during my time in the nonprofit world. This time-keeping app is designed primarily as a tool to help nonprofits track and analyze volunteerism. Use it to track volunteerism for multiple grant initiatives, client participation in various programs, or employee hours spent on different tasks. Get rid of those trusty time sheets and sign-in clipboards!
