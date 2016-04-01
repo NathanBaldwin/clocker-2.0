@@ -46,7 +46,7 @@ Use the filter bar on the left to filter the data and see the statistics update 
 
 You can filter by name, date range, group, and/or activity to segment the data according to you needs.
 
-###Invite mobile users
+####Invite mobile users
 
 On the 'backend' view, if an individual has registered for a mobile account, you will be able to search their name in the 'Invite Mobile User' dropdown search.
 
