@@ -39,6 +39,10 @@
         $scope.activityLog = Array.prototype.slice.call($rootScope.userData.activityLog)
         $scope.activityLog = $scope.activityLog.reverse()
       }
+
+    $scope.$watch('userData', function() {
+      console.log("USER DATA changed!")
+    })
     
     $query.getAllMobileUsers()
       .then(function(mobileUsers) {
@@ -50,6 +54,7 @@
       top: 150,
       position: 'auto'
     }
+
     //prevent default for group and activity dropdowns clicks:
     $scope.openGroup = function() {
       event.stopPropagation()
@@ -58,7 +63,6 @@
     //reflow fixed table header when filtered sum changes:
     $scope.varForReflowWatch = 0
     $scope.$watch('filteredSum', function() {
-      console.log("watch worked!!")
       $scope.varForReflowWatch = $scope.varForReflowWatch + 1
     })
   
