@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
-const io = require('socket.io')(server)
+const io = require('socket.io')(server, {origins:'clockeronline.com:* http://clockeronline.com:* http://www.clockeronline.com:*, clocker-mobile.com:* http://clocker-mobile.com:* http://www.clocker-mobile.com:*'})
 const flash = require('connect-flash')
 const mongoose = require('mongoose')
 const session = require('express-session')
