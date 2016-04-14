@@ -139,8 +139,13 @@ input.dropdown-select {
   right: 0;
   bottom: 0;
   left: 0;
-  padding-top: 4.5%;
-  padding-bottom: 4%; }
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.center-container {
+  display: inline-block;
+  vertical-align: middle; }
 
 .wrapper.form-success .container h1 {
   -webkit-transform: translateY(85px);
@@ -150,7 +155,6 @@ input.dropdown-select {
 .login-container {
   max-width: 600px;
   margin: 0 auto;
-  height: 400px;
   text-align: center; }
 
 .login-container h1 {

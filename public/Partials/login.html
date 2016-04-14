@@ -3,26 +3,27 @@
 <div id="login-page">
 	<div class="wrapper">
 		<div class="login-container">
+			<div class='center-container'>
+				<div class="wrap center">
+	 				<div class="timer"></div>
+				</div>
 
-			<div class="wrap center">
- 				<div class="timer"></div>
+				<span class="logo-login"><i class="fa fa-picture-o"></i></span>
+				<h1 class="heading">Clocker</h1>
+				<form class="form">
+					<input id="user-email" ng-model="email" type='email' placeholder='Email' name='email' autofocus required>
+					<input id="user-password" ng-model="password" type='password' placeholder='Password' name='password'>
+					<button id="login-button" ng-click="login()">Login</button>
+				</form>
+
+				<div>
+					<h5><strong>Just want to demo the app?</strong></h5>
+					<h5>Feel free to use my demo account by signing in with nathansbaldwin@gmail.com, password: 123</h5>
+					<h5><strong>New to Clocker?</strong></h5>
+					<h5>Click <a href="#/register" class="underline">here</a> to register in 5 seconds!</h5>
+				</div>
+
 			</div>
-
-			<span class="logo-login"><i class="fa fa-picture-o"></i></span>
-			<h1 class="heading">Clocker</h1>
-			<form class="form">
-				<input id="user-email" ng-model="email" type='email' placeholder='Email' name='email' autofocus required>
-				<input id="user-password" ng-model="password" type='password' placeholder='Password' name='password'>
-				<button id="login-button" ng-click="login()">Login</button>
-			</form>
-
-			<div>
-				<h5><strong>Just want to demo the app?</strong></h5>
-				<h5>Feel free to use my demo account by signing in with nathansbaldwin@gmail.com, password: 123</h5>
-				<h5><strong>New to Clocker?</strong></h5>
-				<h5>Click <a href="#/register" class="underline">here</a> to register in 5 seconds!</h5>
-			</div>
-			
 		</div>
 	</div>
 </div>
