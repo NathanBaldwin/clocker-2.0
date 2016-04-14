@@ -13,7 +13,7 @@ const bodyParser = require('body-parser')
 const routes = require('./Routes')
 
 //ENVIRONMENT variables:
-const PORT = process.env.PORT || 1025
+const PORT = process.env.PORT || 3000
 const MONGODB_PORT = process.env.MONGODB_PORT || 27017
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 
