@@ -20,7 +20,7 @@ const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME || 'clocker2_1'
 //MIDDLEWARE:
 app.use(function (req, res, next) {
   // IP's we want to allow access:
-  res.setHeader('Access-Control-Allow-Origin', 'http://clocker-mobile.com')
+  res.setHeader('Access-Control-Allow-Origin', 'http://clocker-mobile.comx')
   // 'http://127.0.0.1:8080'
   // Request methods to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
